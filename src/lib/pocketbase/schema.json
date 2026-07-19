@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-19T23:40:46.186Z",
+  "generatedAt": "2026-07-19T23:44:38.156Z",
   "collections": [
     {
       "name": "users",
@@ -29,25 +29,217 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": [
-            "onCreate"
-          ]
+          "autodateTriggers": ["onCreate"]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": [
-            "onCreate",
-            "onUpdate"
-          ]
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        },
+        {
+          "name": "role",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["admin", "accountant", "client"]
         }
       ],
       "indexes": [
         "CREATE UNIQUE INDEX `idx_tokenKey__pb_users_auth_` ON `users` (`tokenKey`)",
         "CREATE UNIQUE INDEX `idx_email__pb_users_auth_` ON `users` (`email`) WHERE `email` != ''"
       ]
+    },
+    {
+      "name": "companies",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != '' && (@request.auth.role = 'accountant' || @request.auth.role = 'admin' || owner = @request.auth.id)",
+        "view": "@request.auth.id != '' && (@request.auth.role = 'accountant' || @request.auth.role = 'admin' || owner = @request.auth.id)",
+        "create": "@request.auth.role = 'accountant' || @request.auth.role = 'admin'",
+        "update": "@request.auth.role = 'accountant' || @request.auth.role = 'admin'",
+        "delete": "@request.auth.role = 'accountant' || @request.auth.role = 'admin'"
+      },
+      "fields": [
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "cnpj",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "tax_regime",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["simples", "presumido", "real"]
+        },
+        {
+          "name": "owner",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "users"
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["active", "inactive"]
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "tax_regimes_requirements",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": null,
+        "update": null,
+        "delete": null
+      },
+      "fields": [
+        {
+          "name": "regime_type",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["simples", "presumido", "real"]
+        },
+        {
+          "name": "requirement_name",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "frequency",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["monthly", "annually", "quarterly"]
+        },
+        {
+          "name": "due_day",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "documents",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != '' && (@request.auth.role = 'accountant' || @request.auth.role = 'admin' || company.owner = @request.auth.id)",
+        "view": "@request.auth.id != '' && (@request.auth.role = 'accountant' || @request.auth.role = 'admin' || company.owner = @request.auth.id)",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "company",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "companies"
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "file",
+          "type": "file",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "category",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["tax", "payroll", "accounting", "legal"]
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "payment_status",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["pending", "paid", "n/a"]
+        },
+        {
+          "name": "embedding",
+          "type": "vector",
+          "required": false,
+          "system": false,
+          "vectorDimensions": 1536,
+          "vectorDistance": "cosine"
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
     }
   ]
 }
