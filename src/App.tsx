@@ -10,6 +10,11 @@ import Companies from '@/pages/Companies'
 import Documents from '@/pages/Documents'
 import Chat from '@/pages/Chat'
 import NotFound from '@/pages/NotFound'
+import AdminConfirmation from '@/pages/admin/AdminConfirmation'
+import AdminPending from '@/pages/admin/AdminPending'
+import AdminDocuments from '@/pages/admin/AdminDocuments'
+import ClientDashboard from '@/pages/client/ClientDashboard'
+import ClientDocuments from '@/pages/client/ClientDocuments'
 
 const ProtectedRoute = ({
   children,
@@ -46,6 +51,36 @@ const AppRoutes = () => (
       />
       <Route path="/documents" element={<Documents />} />
       <Route path="/chat" element={<Chat />} />
+      <Route
+        path="/admin/documentos/confirmacao"
+        element={
+          <ProtectedRoute requireAccountant>
+            <AdminConfirmation />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/documentos/pendentes"
+        element={
+          <ProtectedRoute requireAccountant>
+            <AdminPending />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/documentos"
+        element={
+          <ProtectedRoute requireAccountant>
+            <AdminDocuments />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/cliente/dashboard" element={<ClientDashboard />} />
+      <Route path="/cliente/documentos" element={<ClientDocuments />} />
+      <Route path="/cliente/guias" element={<ClientDocuments category="tax" />} />
+      <Route path="/cliente/holerites" element={<ClientDocuments category="payroll" />} />
+      <Route path="/cliente/contabeis" element={<ClientDocuments category="accounting" />} />
+      <Route path="/cliente/legais" element={<ClientDocuments category="legal" />} />
     </Route>
     <Route path="*" element={<NotFound />} />
   </Routes>

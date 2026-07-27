@@ -4,7 +4,7 @@ import { getDocuments, type Document } from '@/services/api'
 import { useRealtime } from '@/hooks/use-realtime'
 import { Card, CardContent } from '@/components/ui/card'
 import { ValidationBadge } from '@/components/ValidationBadge'
-import { FileText, Clock, CheckCircle2, XCircle, ArrowRight } from 'lucide-react'
+import { FileText, Clock, CheckCircle2, XCircle, ArrowRight, AlertCircle } from 'lucide-react'
 import { format } from 'date-fns'
 
 export default function ClientDashboard() {
@@ -23,13 +23,20 @@ export default function ClientDashboard() {
   })
 
   const pending = docs.filter((d) => d.validation_status === 'pending')
+  const pendingConfirmation = docs.filter((d) => d.validation_status === 'pending_confirmation')
   const approved = docs.filter((d) => d.validation_status === 'approved')
   const rejected = docs.filter((d) => d.validation_status === 'rejected')
 
   const stats = [
     { label: 'Total', value: docs.length, icon: FileText, color: 'text-slate-600 bg-slate-50' },
     {
-      label: 'Pendentes',
+      label: 'Aguard. Confirmação',
+      value: pendingConfirmation.length,
+      icon: AlertCircle,
+      color: 'text-blue-600 bg-blue-50',
+    },
+    {
+      label: 'Em Validação',
       value: pending.length,
       icon: Clock,
       color: 'text-yellow-600 bg-yellow-50',

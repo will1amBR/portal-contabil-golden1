@@ -12,8 +12,9 @@ export interface Company extends RecordModel {
 export interface Document extends RecordModel {
   title: string
   category: 'tax' | 'payroll' | 'accounting' | 'legal'
+  suggested_category?: 'tax' | 'payroll' | 'accounting' | 'legal'
   payment_status: 'pending' | 'paid' | 'n/a'
-  validation_status: 'pending' | 'approved' | 'rejected'
+  validation_status: 'pending' | 'approved' | 'rejected' | 'pending_confirmation'
   validation_notes?: string
   validated_by?: string
   validated_at?: string
@@ -24,6 +25,13 @@ export interface Document extends RecordModel {
     company?: Company
     validated_by?: { id: string; name: string }
   }
+}
+
+export interface TaxRegimeRequirement extends RecordModel {
+  regime_type: 'simples' | 'presumido' | 'real'
+  requirement_name: string
+  frequency: 'monthly' | 'annually' | 'quarterly'
+  due_day: number
 }
 
 export const getCompanies = async () => {
@@ -50,6 +58,34 @@ export const getPendingDocuments = async () => {
     filter: "validation_status = 'pending'",
     sort: '-created',
     expand: 'company,validated_by',
+  })
+}
+
+export const getConfirmationDocuments = async () => {
+  return pb.collection('documents').getFullList<Document>({
+    filter: "validation_status = 'pending_confirmation'",
+    sort: '-created',
+    expand: 'company,validated_by',
+  })
+}
+
+export const confirmDocument = async (id: string, category: string) => {
+  return pb.collection('documents').update<Document>(id, {
+    category,
+    validation_status: 'pending',
+    validated_by: pb.authStore.record?.id,
+  })
+}
+
+export const getTaxRegimesRequirements = async (regimeType?: string) => {
+  const filter = regimeType ? `regime_type = "${regimeType}"` : ''
+  return pb.collection('tax_regimes_requirements').getFullList<TaxRegimeRequirement>({ filter })
+}
+
+export const getCompaniesByOwner = async (ownerId: string) => {
+  return pb.collection('companies').getFullList<Company>({
+    filter: `owner = "${ownerId}"`,
+    sort: '-created',
   })
 }
 

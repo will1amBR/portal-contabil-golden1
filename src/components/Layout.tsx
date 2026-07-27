@@ -11,10 +11,12 @@ import {
   LogOut,
   Clock,
   Building2,
+  ClipboardCheck,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { RequiredDocsModal } from '@/components/RequiredDocsModal'
 
 export default function Layout() {
   const { user, isAccountant, signOut } = useAuth()
@@ -32,6 +34,7 @@ export default function Layout() {
 
   const adminNav = [
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
+    { name: 'Confirmação', path: '/admin/documentos/confirmacao', icon: ClipboardCheck },
     { name: 'Pendentes', path: '/admin/documentos/pendentes', icon: Clock },
     { name: 'Documentos', path: '/admin/documentos', icon: FileText },
     { name: 'Empresas', path: '/companies', icon: Building2 },
@@ -94,6 +97,7 @@ export default function Layout() {
           </div>
         </header>
         <div className="flex-1 p-4 md:p-8 overflow-auto animate-fade-in-up pb-20 md:pb-8">
+          {!isAccountant && <RequiredDocsModal />}
           <Outlet />
         </div>
       </main>

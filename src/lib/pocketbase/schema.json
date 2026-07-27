@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T14:44:54.356Z",
+  "generatedAt": "2026-07-27T19:05:25.065Z",
   "collections": [
     {
       "name": "users",
@@ -239,13 +239,6 @@
           "autodateTriggers": ["onCreate", "onUpdate"]
         },
         {
-          "name": "validation_status",
-          "type": "select",
-          "required": false,
-          "system": false,
-          "selectValues": ["pending", "approved", "rejected"]
-        },
-        {
           "name": "validation_notes",
           "type": "text",
           "required": false,
@@ -263,6 +256,20 @@
           "type": "date",
           "required": false,
           "system": false
+        },
+        {
+          "name": "suggested_category",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["tax", "payroll", "accounting", "legal"]
+        },
+        {
+          "name": "validation_status",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["pending", "approved", "rejected", "pending_confirmation"]
         }
       ],
       "indexes": [

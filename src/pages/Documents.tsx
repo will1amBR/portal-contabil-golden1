@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { FileText, Download, CheckCircle2 } from 'lucide-react'
 import { DocumentUpload } from '@/components/DocumentUpload'
+import { ValidationBadge } from '@/components/ValidationBadge'
 import { useAuth } from '@/hooks/use-auth'
 
 const CAT_LABELS = {
@@ -86,6 +87,7 @@ export default function Documents() {
                     {doc.payment_status === 'paid' && (
                       <Badge className="bg-emerald-500 text-[10px]">Pago</Badge>
                     )}
+                    <ValidationBadge status={doc.validation_status || 'pending'} />
                   </div>
                 </div>
               </div>

@@ -131,7 +131,8 @@ export default function AdminDocuments() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Todos status</SelectItem>
-            <SelectItem value="pending">Pendentes</SelectItem>
+            <SelectItem value="pending_confirmation">Aguardando Confirmação</SelectItem>
+            <SelectItem value="pending">Em Validação</SelectItem>
             <SelectItem value="approved">Aprovados</SelectItem>
             <SelectItem value="rejected">Rejeitados</SelectItem>
           </SelectContent>
