@@ -12,6 +12,7 @@ import {
   Clock,
   Building2,
   ClipboardCheck,
+  BarChart3,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -29,6 +30,7 @@ export default function Layout() {
     { name: 'Holerites', path: '/cliente/holerites', icon: Wallet },
     { name: 'Contábeis', path: '/cliente/contabeis', icon: Calculator },
     { name: 'Legais', path: '/cliente/legais', icon: Scale },
+    { name: 'Relatório Mensal', path: '/relatorios', icon: BarChart3 },
     { name: 'Assistente', path: '/chat', icon: MessageSquare },
   ]
 
@@ -37,6 +39,7 @@ export default function Layout() {
     { name: 'Confirmação', path: '/admin/documentos/confirmacao', icon: ClipboardCheck },
     { name: 'Pendentes', path: '/admin/documentos/pendentes', icon: Clock },
     { name: 'Documentos', path: '/admin/documentos', icon: FileText },
+    { name: 'Relatório Mensal', path: '/relatorios', icon: BarChart3 },
     { name: 'Empresas', path: '/companies', icon: Building2 },
     { name: 'Assistente', path: '/chat', icon: MessageSquare },
   ]

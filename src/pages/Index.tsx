@@ -25,11 +25,18 @@ export default function Index() {
 
   return (
     <div className="space-y-8 pb-16">
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
-          Olá, {user?.name.split(' ')[0]}
-        </h1>
-        <p className="text-slate-500 mt-1">Resumo das suas atividades e pendências.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+            Olá, {user?.name?.split(' ')[0] || 'Usuário'}
+          </h1>
+          <p className="text-slate-500 mt-1">Resumo das suas atividades e pendências contábeis.</p>
+        </div>
+        <a href="/relatorios">
+          <button className="inline-flex items-center gap-2 px-4 py-2 border rounded-md text-sm font-medium bg-white hover:bg-slate-50 text-slate-700 shadow-xs transition-colors">
+            Ver Relatório Mensal
+          </button>
+        </a>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

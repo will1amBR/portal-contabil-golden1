@@ -15,6 +15,7 @@ import AdminPending from '@/pages/admin/AdminPending'
 import AdminDocuments from '@/pages/admin/AdminDocuments'
 import ClientDashboard from '@/pages/client/ClientDashboard'
 import ClientDocuments from '@/pages/client/ClientDocuments'
+import MonthlyReport from '@/pages/MonthlyReport'
 
 const ProtectedRoute = ({
   children,
@@ -75,6 +76,7 @@ const AppRoutes = () => (
           </ProtectedRoute>
         }
       />
+      <Route path="/relatorios" element={<MonthlyReport />} />
       <Route path="/cliente/dashboard" element={<ClientDashboard />} />
       <Route path="/cliente/documentos" element={<ClientDocuments />} />
       <Route path="/cliente/guias" element={<ClientDocuments category="tax" />} />
