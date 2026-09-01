@@ -133,7 +133,6 @@ export default function ClientDashboard() {
               tempo real.
             </p>
           </div>
-
           <div className="flex flex-wrap items-center gap-3">
             <DocumentUpload
               companies={companies}
@@ -148,7 +147,17 @@ export default function ClientDashboard() {
                 <BarChart3 className="w-4 h-4 text-emerald-400" /> Relatório Mensal
               </Button>
             </Link>
-          </div>
+            <Button
+              variant="outline"
+              onClick={() => {
+                localStorage.removeItem(`onboarding_completed_${user?.name || 'client'}`)
+                window.location.reload()
+              }}
+              className="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border-emerald-500/30 gap-1.5 text-xs"
+            >
+              <Sparkles className="w-3.5 h-3.5" /> Rever Onboarding
+            </Button>
+          </div>{' '}
         </div>
       </div>
 

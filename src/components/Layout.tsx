@@ -37,7 +37,15 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { RequiredDocsModal } from '@/components/RequiredDocsModal'
-import { getConfirmationDocuments, getPendingDocuments, type Document } from '@/services/api'
+import { ClientOnboardingModal } from '@/components/ClientOnboardingModal'
+import {
+  getConfirmationDocuments,
+  getPendingDocuments,
+  getCompaniesByOwner,
+  getTaxRegimesRequirements,
+  type Company,
+  type TaxRegimeRequirement,
+} from '@/services/api'
 import { useRealtime } from '@/hooks/use-realtime'
 
 export default function Layout() {
@@ -47,6 +55,29 @@ export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [confirmationCount, setConfirmationCount] = useState<number>(0)
   const [pendingCount, setPendingCount] = useState<number>(0)
+  const [onboardingOpen, setOnboardingOpen] = useState(false)
+  const [clientCompany, setClientCompany] = useState<Company | null>(null)
+  const [requirements, setRequirements] = useState<TaxRegimeRequirement[]>([])
+
+  // Check onboarding on client login
+  useEffect(() => {
+    if (!isAccountant && user) {
+      const isCompleted = localStorage.getItem(`onboarding_completed_${user.name || 'client'}`)
+      if (!isCompleted) {
+        setOnboardingOpen(true)
+      }
+
+      getCompaniesByOwner(user.id)
+        .then(async (comps) => {
+          if (comps.length > 0) {
+            setClientCompany(comps[0])
+            const reqs = await getTaxRegimesRequirements(comps[0].tax_regime)
+            setRequirements(reqs)
+          }
+        })
+        .catch(() => {})
+    }
+  }, [isAccountant, user])
 
   // Quick stats badge for accountant
   const fetchBadgeCounts = async () => {
@@ -176,19 +207,31 @@ export default function Layout() {
           })}
         </nav>
       </div>
-
       {/* Office info card in sidebar */}
       <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-xs space-y-2">
-        <div className="flex items-center gap-2 text-slate-200 font-semibold">
-          <Building2 className="w-4 h-4 text-emerald-400" />
-          <span>Golden Contabilidade</span>
+        <div className="flex items-center justify-between text-slate-200 font-semibold">
+          <div className="flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-emerald-400" />
+            <span>Golden Contabilidade</span>
+          </div>
+          {!isAccountant && (
+            <button
+              onClick={() => {
+                setOnboardingOpen(true)
+                if (onItemClick) onItemClick()
+              }}
+              className="text-[10px] text-emerald-400 hover:text-emerald-300 underline font-medium"
+            >
+              Guia Inicial
+            </button>
+          )}
         </div>
         <p className="text-[11px] text-slate-400 leading-relaxed">
           {isAccountant
             ? 'Atendimento ativo para Koren Ambiental e carteira de clientes.'
             : 'Escritório contábil responsável pelo processamento fiscal e legal.'}
         </p>
-      </div>
+      </div>{' '}
     </div>
   )
 
@@ -359,6 +402,18 @@ export default function Layout() {
         {/* Page Content Container */}
         <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto animate-fade-in-up pb-24 lg:pb-8">
           {!isAccountant && <RequiredDocsModal />}
+          {!isAccountant && (
+            <ClientOnboardingModal
+              open={onboardingOpen}
+              onOpenChange={setOnboardingOpen}
+              userName={user?.name || 'William'}
+              company={clientCompany}
+              requirements={requirements}
+              onDocumentUploaded={() => {
+                fetchBadgeCounts()
+              }}
+            />
+          )}
           <Outlet />
         </div>
       </main>

@@ -17,8 +17,12 @@ import {
   CheckCircle2,
   Clock,
   Info,
+  Mail,
+  Loader2,
+  Send,
 } from 'lucide-react'
-import type { Company, TaxRegimeRequirement } from '@/services/api'
+import { triggerRemindersCheck, type Company, type TaxRegimeRequirement } from '@/services/api'
+import { useToast } from '@/hooks/use-toast'
 import {
   format,
   addMonths,
@@ -74,6 +78,27 @@ export default function TaxObligationsCalendar({
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedCompanyId, setSelectedCompanyId] = useState<string>('all')
   const [selectedEvent, setSelectedEvent] = useState<ObligationEvent | null>(null)
+  const [sendingReminder, setSendingReminder] = useState(false)
+  const { toast } = useToast()
+
+  const handleSendReminderCheck = async () => {
+    setSendingReminder(true)
+    try {
+      const res: any = await triggerRemindersCheck()
+      toast({
+        title: 'Verificação de lembretes concluída!',
+        description: `${res.sentCount || 0} aviso(s) de vencimento enviado(s) aos clientes.`,
+      })
+    } catch (err: any) {
+      toast({
+        title: 'Falha no disparo',
+        description: err?.message || 'Erro ao comunicar com o servidor de lembretes.',
+        variant: 'destructive',
+      })
+    } finally {
+      setSendingReminder(false)
+    }
+  }
 
   const activeCompanies = useMemo(() => {
     return companies.filter((c) => c.status !== 'inactive')
@@ -213,9 +238,23 @@ export default function TaxObligationsCalendar({
                 Acompanhe os prazos de entrega baseados no regime tributário das suas empresas.
               </CardDescription>
             </div>
-
             {/* Quick stats pills */}
             <div className="flex flex-wrap items-center gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleSendReminderCheck}
+                disabled={sendingReminder}
+                className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border-emerald-500/40 text-xs h-8 gap-1.5"
+              >
+                {sendingReminder ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Mail className="w-3.5 h-3.5" />
+                )}
+                <span>Testar Lembretes</span>
+              </Button>
+
               <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
                 <span className="text-xs font-semibold text-slate-200">
@@ -232,7 +271,7 @@ export default function TaxObligationsCalendar({
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                 <span className="text-xs font-semibold text-slate-200">{ontimeCount} Em dia</span>
               </div>
-            </div>
+            </div>{' '}
           </div>
         </CardHeader>
 

@@ -34,6 +34,19 @@ export interface TaxRegimeRequirement extends RecordModel {
   due_day: number
 }
 
+export interface NotificationReminder extends RecordModel {
+  company: string
+  requirement_name: string
+  recipient_email: string
+  due_date: string
+  reference_key: string
+  sent_at?: string
+  status: string
+  expand?: {
+    company?: Company
+  }
+}
+
 export const getCompanies = async () => {
   return pb.collection('companies').getFullList<Company>({ sort: '-created', expand: 'owner' })
 }
@@ -119,4 +132,28 @@ export const rejectDocument = async (id: string, validation_notes: string) => {
 
 export const getFileUrl = (record: RecordModel, filename: string) => {
   return pb.files.getURL(record, filename)
+}
+
+export const getNotificationReminders = async (limit = 50) => {
+  try {
+    return await pb.collection('notification_reminders').getFullList<NotificationReminder>({
+      sort: '-created',
+      batch: limit,
+      expand: 'company',
+    })
+  } catch {
+    return []
+  }
+}
+
+export const triggerRemindersCheck = async () => {
+  try {
+    const res = await pb.send('/api/reminders/trigger-check', {
+      method: 'POST',
+    })
+    return res
+  } catch (error) {
+    console.error('Trigger reminder error:', error)
+    throw error
+  }
 }
