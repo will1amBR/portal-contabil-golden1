@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T20:27:32.447Z",
+  "generatedAt": "2026-09-01T05:42:29.881Z",
   "collections": [
     {
       "name": "users",
@@ -276,6 +276,77 @@
         "CREATE INDEX `idx_documents_validation_status` ON `documents` (validation_status)",
         "CREATE INDEX `idx_documents_company` ON `documents` (company)"
       ]
+    },
+    {
+      "name": "notification_reminders",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "company",
+          "type": "relation",
+          "required": false,
+          "system": false,
+          "collectionRef": "companies"
+        },
+        {
+          "name": "requirement_name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "recipient_email",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "due_date",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "reference_key",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "sent_at",
+          "type": "date",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
     }
   ]
 }
