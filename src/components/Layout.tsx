@@ -21,6 +21,7 @@ import {
   Menu,
   X,
   User,
+  UserPlus,
   ExternalLink,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -44,6 +45,7 @@ import {
   getPendingDocuments,
   getCompaniesByOwner,
   getTaxRegimesRequirements,
+  getLeads,
   type Company,
   type TaxRegimeRequirement,
 } from '@/services/api'
@@ -56,6 +58,7 @@ export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [confirmationCount, setConfirmationCount] = useState<number>(0)
   const [pendingCount, setPendingCount] = useState<number>(0)
+  const [newLeadsCount, setNewLeadsCount] = useState<number>(0)
   const [onboardingOpen, setOnboardingOpen] = useState(false)
   const [clientCompany, setClientCompany] = useState<Company | null>(null)
   const [requirements, setRequirements] = useState<TaxRegimeRequirement[]>([])
@@ -84,9 +87,14 @@ export default function Layout() {
   const fetchBadgeCounts = async () => {
     if (!isAccountant) return
     try {
-      const [conf, pend] = await Promise.all([getConfirmationDocuments(), getPendingDocuments()])
+      const [conf, pend, allLeads] = await Promise.all([
+        getConfirmationDocuments(),
+        getPendingDocuments(),
+        getLeads("status = 'new'"),
+      ])
       setConfirmationCount(conf.length)
       setPendingCount(pend.length)
+      setNewLeadsCount(allLeads.length)
     } catch {
       // silent
     }
@@ -97,6 +105,9 @@ export default function Layout() {
   }, [isAccountant, location.pathname])
 
   useRealtime('documents', () => {
+    fetchBadgeCounts()
+  })
+  useRealtime('leads', () => {
     fetchBadgeCounts()
   })
 
@@ -113,6 +124,14 @@ export default function Layout() {
 
   const adminNav = [
     { name: 'Visão Geral', path: '/', icon: LayoutDashboard, badge: null },
+    {
+      name: 'Leads & Contatos',
+      path: '/admin/leads',
+      icon: UserPlus,
+      count: newLeadsCount,
+      countColor: 'bg-blue-500 text-white',
+      badge: newLeadsCount > 0 ? null : 'Landing',
+    },
     {
       name: 'Triagem & Confirmação',
       path: '/admin/documentos/confirmacao',

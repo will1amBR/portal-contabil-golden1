@@ -8,12 +8,15 @@ import {
   getTaxRegimesRequirements,
   getNotificationReminders,
   confirmDocument,
+  bulkConfirmDocuments,
   approveDocument,
   triggerRemindersCheck,
+  getLeads,
   type Document,
   type Company,
   type TaxRegimeRequirement,
   type NotificationReminder,
+  type Lead,
 } from '@/services/api'
 import { useRealtime } from '@/hooks/use-realtime'
 import {
@@ -34,6 +37,7 @@ import {
   Mail,
   Send,
   Check,
+  CheckCheck,
   ChevronRight,
   Filter,
   RefreshCw,
@@ -44,7 +48,9 @@ import {
   Layers,
   ArrowUpRight,
   Loader2,
+  UserPlus,
 } from 'lucide-react'
+import { Checkbox } from '@/components/ui/checkbox'
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import {
   PieChart,
@@ -80,7 +86,9 @@ export default function Index() {
   const [companies, setCompanies] = useState<Company[]>([])
   const [requirements, setRequirements] = useState<TaxRegimeRequirement[]>([])
   const [reminders, setReminders] = useState<NotificationReminder[]>([])
+  const [leads, setLeads] = useState<Lead[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedDocIds, setSelectedDocIds] = useState<string[]>([])
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null)
   const [triggeringReminders, setTriggeringReminders] = useState(false)
   const [selectedCompanyFilter, setSelectedCompanyFilter] = useState<string>('all')
@@ -88,16 +96,18 @@ export default function Index() {
   const loadData = async () => {
     try {
       setLoading(true)
-      const [d, c, r, rem] = await Promise.all([
+      const [d, c, r, rem, ld] = await Promise.all([
         getDocuments(),
         isAccountant ? getCompanies() : Promise.resolve([]),
         isAccountant ? getTaxRegimesRequirements() : Promise.resolve([]),
         isAccountant ? getNotificationReminders(20) : Promise.resolve([]),
+        isAccountant ? getLeads() : Promise.resolve([]),
       ])
       setDocs(d)
       if (c) setCompanies(c)
       if (r) setRequirements(r)
       if (rem) setReminders(rem)
+      if (ld) setLeads(ld)
     } finally {
       setLoading(false)
     }
@@ -116,21 +126,89 @@ export default function Index() {
   useRealtime('notification_reminders', () => {
     loadData()
   })
+  useRealtime('leads', () => {
+    loadData()
+  })
 
   // Quick Action Handlers for Accountant
   const handleQuickConfirm = async (doc: Document) => {
     setActionLoadingId(doc.id)
     try {
-      await confirmDocument(doc.id, doc.suggested_category || 'legal')
+      await confirmDocument(
+        doc.id,
+        doc.suggested_category || 'legal',
+        false,
+        doc.suggested_category || doc.category,
+      )
       toast({
         title: 'Categoria confirmada!',
         description: `"${doc.title}" enviada para validação.`,
       })
+      setSelectedDocIds((prev) => prev.filter((id) => id !== doc.id))
       await loadData()
     } catch {
       toast({
         title: 'Erro ao confirmar',
         description: 'Não foi possível confirmar a categoria.',
+        variant: 'destructive',
+      })
+    } finally {
+      setActionLoadingId(null)
+    }
+  }
+
+  // Bulk Confirmation Handlers
+  const handleConfirmSelected = async () => {
+    const docsToConfirm = pendingConfirmationDocs.filter((d) => selectedDocIds.includes(d.id))
+    if (docsToConfirm.length === 0) return
+
+    setActionLoadingId('selected_bulk')
+    try {
+      await bulkConfirmDocuments(
+        docsToConfirm.map((d) => ({
+          id: d.id,
+          suggestedCategory: d.suggested_category || d.category,
+        })),
+      )
+      toast({
+        title: 'Aprovação em lote concluída!',
+        description: `${docsToConfirm.length} documento(s) confirmados com as categorias sugeridas pela IA.`,
+      })
+      setSelectedDocIds([])
+      await loadData()
+    } catch {
+      toast({
+        title: 'Erro na confirmação em lote',
+        description: 'Não foi possível confirmar os documentos selecionados.',
+        variant: 'destructive',
+      })
+    } finally {
+      setActionLoadingId(null)
+    }
+  }
+
+  const handleConfirmCompanyPendingBatch = async (companyId: string, companyName: string) => {
+    const companyDocs = pendingConfirmationDocs.filter((d) => d.company === companyId)
+    if (companyDocs.length === 0) return
+
+    setActionLoadingId(`company_bulk_${companyId}`)
+    try {
+      await bulkConfirmDocuments(
+        companyDocs.map((d) => ({
+          id: d.id,
+          suggestedCategory: d.suggested_category || d.category,
+        })),
+      )
+      toast({
+        title: `Lote confirmado para ${companyName}!`,
+        description: `${companyDocs.length} documento(s) da empresa avançaram na esteira com sucesso.`,
+      })
+      setSelectedDocIds((prev) => prev.filter((id) => !companyDocs.some((cd) => cd.id === id)))
+      await loadData()
+    } catch {
+      toast({
+        title: 'Erro ao confirmar lote da empresa',
+        description: 'Não foi possível confirmar os documentos.',
         variant: 'destructive',
       })
     } finally {
@@ -192,6 +270,48 @@ export default function Index() {
   const approvedDocs = filteredDocs.filter((d) => d.validation_status === 'approved')
   const rejectedDocs = filteredDocs.filter((d) => d.validation_status === 'rejected')
   const unpaidGuides = filteredDocs.filter((d) => d.payment_status === 'pending')
+
+  // Group pending confirmation docs by company for batch-by-client actions
+  const pendingCompaniesMap = useMemo(() => {
+    const map: Record<string, { companyName: string; docs: Document[] }> = {}
+    pendingConfirmationDocs.forEach((d) => {
+      const cId = d.company
+      const cName = d.expand?.company?.name || 'Empresa Cliente'
+      if (!map[cId]) {
+        map[cId] = { companyName: cName, docs: [] }
+      }
+      map[cId].docs.push(d)
+    })
+    return Object.entries(map).map(([companyId, data]) => ({
+      companyId,
+      companyName: data.companyName,
+      count: data.docs.length,
+      docs: data.docs,
+    }))
+  }, [pendingConfirmationDocs])
+
+  // Selection helpers for Dashboard quick triage
+  const allPendingSelected =
+    pendingConfirmationDocs.length > 0 &&
+    pendingConfirmationDocs.every((d) => selectedDocIds.includes(d.id))
+  const somePendingSelected =
+    pendingConfirmationDocs.some((d) => selectedDocIds.includes(d.id)) && !allPendingSelected
+
+  const toggleSelectAllPending = () => {
+    if (allPendingSelected) {
+      const pendingIds = new Set(pendingConfirmationDocs.map((d) => d.id))
+      setSelectedDocIds((prev) => prev.filter((id) => !pendingIds.has(id)))
+    } else {
+      const newIds = new Set([...selectedDocIds, ...pendingConfirmationDocs.map((d) => d.id)])
+      setSelectedDocIds(Array.from(newIds))
+    }
+  }
+
+  const toggleSelectPendingDoc = (id: string) => {
+    setSelectedDocIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+    )
+  }
 
   // Calculate upcoming and overdue tax obligations across all companies
   const upcomingObligations = useMemo(() => {
@@ -386,7 +506,7 @@ export default function Index() {
                 to="/admin/documentos/confirmacao"
                 className="text-xs font-semibold text-indigo-700 hover:text-indigo-900 flex items-center gap-0.5"
               >
-                Revisar <ChevronRight className="w-3.5 h-3.5" />
+                Revisar em Lote <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
             <p className="text-xs text-indigo-800 mt-1">Aguardando confirmação de pasta</p>
@@ -473,33 +593,118 @@ export default function Index() {
 
       {/* Actionable Command Row: Direct Pending Queues (Interactive 1-Click Operations) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Queue 1: Pendências aguardando confirmação de categoria */}
+        {/* Queue 1: Pendências aguardando confirmação de categoria (com Aprovação em Lote) */}
         <Card className="border border-slate-200 shadow-xs bg-white">
-          <CardHeader className="p-5 pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+          <CardHeader className="p-5 pb-3 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center">
                 <ClipboardCheck className="w-4 h-4" />
               </div>
               <div>
                 <CardTitle className="text-base font-bold text-slate-900">
-                  Triagem & Confirmação Rápida
+                  Triagem & Confirmação em Lote
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500">
-                  Sugestões da IA aguardando decisão do contador
+                  Confirme documentos individuais ou por cliente de uma só vez
                 </CardDescription>
               </div>
             </div>
 
-            <Link
-              to="/admin/documentos/confirmacao"
-              className="text-xs font-semibold text-indigo-700 hover:text-indigo-800 flex items-center gap-1"
-            >
-              Ver fila completa ({pendingConfirmationDocs.length}){' '}
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                to="/admin/documentos/confirmacao"
+                className="text-xs font-semibold text-indigo-700 hover:text-indigo-800 flex items-center gap-1"
+              >
+                Ver fila ({pendingConfirmationDocs.length}) <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </CardHeader>
 
-          <CardContent className="p-5 pt-4">
+          <CardContent className="p-5 pt-4 space-y-4">
+            {/* Quick Bulk Batch Buttons per Company if available */}
+            {pendingCompaniesMap.length > 0 && (
+              <div className="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 space-y-2">
+                <div className="flex items-center justify-between text-[11px] font-bold text-indigo-950 uppercase tracking-wider">
+                  <span className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+                    Aprovar em lote por empresa:
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {pendingCompaniesMap.map((comp) => {
+                    const isProcessing = actionLoadingId === `company_bulk_${comp.companyId}`
+                    return (
+                      <Button
+                        key={comp.companyId}
+                        size="sm"
+                        variant="outline"
+                        onClick={() =>
+                          handleConfirmCompanyPendingBatch(comp.companyId, comp.companyName)
+                        }
+                        disabled={!!actionLoadingId}
+                        className="h-7 text-xs bg-white hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-800 border-indigo-200 shadow-2xs font-semibold gap-1.5"
+                      >
+                        {isProcessing ? (
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                        ) : (
+                          <CheckCheck className="w-3.5 h-3.5 text-emerald-600" />
+                        )}
+                        <span>
+                          {comp.companyName} ({comp.count})
+                        </span>
+                      </Button>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Selection bar for dashboard queue */}
+            {pendingConfirmationDocs.length > 0 && (
+              <div className="flex items-center justify-between pt-1 text-xs">
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="dash-select-all"
+                    checked={
+                      allPendingSelected ? true : somePendingSelected ? 'indeterminate' : false
+                    }
+                    onCheckedChange={toggleSelectAllPending}
+                  />
+                  <label
+                    htmlFor="dash-select-all"
+                    className="font-medium text-slate-700 cursor-pointer select-none text-[11px]"
+                  >
+                    {allPendingSelected ? 'Desmarcar todos' : 'Selecionar pendentes'}
+                  </label>
+                </div>
+
+                {selectedDocIds.filter((id) => pendingConfirmationDocs.some((d) => d.id === id))
+                  .length > 0 && (
+                  <Button
+                    size="sm"
+                    onClick={handleConfirmSelected}
+                    disabled={!!actionLoadingId}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-7 px-3 shadow-xs gap-1.5"
+                  >
+                    {actionLoadingId === 'selected_bulk' ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <CheckCheck className="w-3.5 h-3.5" />
+                    )}
+                    <span>
+                      Aprovar Selecionados (
+                      {
+                        selectedDocIds.filter((id) =>
+                          pendingConfirmationDocs.some((d) => d.id === id),
+                        ).length
+                      }
+                      )
+                    </span>
+                  </Button>
+                )}
+              </div>
+            )}
+
             {pendingConfirmationDocs.length === 0 ? (
               <div className="py-8 text-center text-slate-400 text-xs flex flex-col items-center justify-center gap-2">
                 <CheckCircle2 className="w-7 h-7 text-emerald-500" />
@@ -507,24 +712,40 @@ export default function Index() {
                 <p>Nenhum documento aguardando classificação.</p>
               </div>
             ) : (
-              <div className="space-y-3">
-                {pendingConfirmationDocs.slice(0, 4).map((doc) => {
+              <div className="space-y-2.5">
+                {pendingConfirmationDocs.slice(0, 5).map((doc) => {
                   const cat = doc.suggested_category || 'tax'
-                  const isProcessing = actionLoadingId === doc.id
+                  const isSelected = selectedDocIds.includes(doc.id)
+                  const isProcessing =
+                    actionLoadingId === doc.id ||
+                    actionLoadingId === 'selected_bulk' ||
+                    actionLoadingId === `company_bulk_${doc.company}`
+
                   return (
                     <div
                       key={doc.id}
-                      className="p-3 bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-200/80 flex items-center justify-between gap-3 transition-colors"
+                      className={`p-3 rounded-xl border flex items-center justify-between gap-3 transition-colors ${
+                        isSelected
+                          ? 'bg-emerald-50/60 border-emerald-300'
+                          : 'bg-slate-50 hover:bg-slate-100/80 border-slate-200/80'
+                      }`}
                     >
-                      <div className="min-w-0">
-                        <p className="text-xs font-bold text-slate-900 truncate">{doc.title}</p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="text-[11px] text-slate-500">
-                            {doc.expand?.company?.name || 'Empresa'}
-                          </span>
-                          <Badge className="bg-indigo-100 text-indigo-800 text-[9px] px-1.5 py-0 border-indigo-200">
-                            IA: {CATEGORY_NAMES[cat]?.label || cat}
-                          </Badge>
+                      <div className="flex items-center gap-3 min-w-0">
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={() => toggleSelectPendingDoc(doc.id)}
+                          aria-label={`Selecionar ${doc.title}`}
+                        />
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-slate-900 truncate">{doc.title}</p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-[11px] text-slate-500">
+                              {doc.expand?.company?.name || 'Empresa'}
+                            </span>
+                            <Badge className="bg-indigo-100 text-indigo-800 text-[9px] px-1.5 py-0 border-indigo-200">
+                              IA: {CATEGORY_NAMES[cat]?.label || cat}
+                            </Badge>
+                          </div>
                         </div>
                       </div>
 
@@ -893,10 +1114,28 @@ export default function Index() {
             </CardHeader>
             <CardContent className="p-5 pt-0 space-y-2">
               <Link
+                to="/admin/leads"
+                className="p-2.5 rounded-lg bg-slate-800/80 hover:bg-slate-800 border border-slate-700 flex items-center justify-between text-xs text-slate-200 hover:text-white transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <UserPlus className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Funil de Leads & Contatos</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  {leads.filter((l) => l.status === 'new').length > 0 && (
+                    <Badge className="bg-blue-500 text-white text-[10px] px-1.5 py-0">
+                      {leads.filter((l) => l.status === 'new').length} Novos
+                    </Badge>
+                  )}
+                  <ArrowUpRight className="w-3.5 h-3.5 text-blue-400" />
+                </div>
+              </Link>
+
+              <Link
                 to="/admin/documentos/confirmacao"
                 className="p-2.5 rounded-lg bg-slate-800/80 hover:bg-slate-800 border border-slate-700 flex items-center justify-between text-xs text-slate-200 hover:text-white transition-colors"
               >
-                <span>Fila de Triagem IA</span>
+                <span>Fila de Triagem IA (Aprovação em Lote)</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-indigo-400" />
               </Link>
 

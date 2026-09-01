@@ -29,6 +29,8 @@ export interface Document extends RecordModel {
   }
 }
 
+export type LeadStatus = 'new' | 'contacted' | 'proposal_sent' | 'won' | 'archived'
+
 export interface Lead extends RecordModel {
   name: string
   email: string
@@ -38,7 +40,7 @@ export interface Lead extends RecordModel {
   tax_regime?: 'simples' | 'presumido' | 'real' | 'mei' | 'nao_sei'
   employees_count?: string
   message?: string
-  status: 'new' | 'contacted' | 'proposal_sent' | 'won' | 'archived'
+  status: LeadStatus
 }
 
 export interface TaxRegimeRequirement extends RecordModel {
@@ -130,8 +132,39 @@ export const createLead = async (leadData: {
   })
 }
 
-export const getLeads = async () => {
-  return pb.collection('leads').getFullList<Lead>({ sort: '-created' })
+export const getLeads = async (filter?: string) => {
+  return pb.collection('leads').getFullList<Lead>({
+    sort: '-created',
+    filter: filter || '',
+  })
+}
+
+export const updateLeadStatus = async (id: string, status: LeadStatus) => {
+  return pb.collection('leads').update<Lead>(id, { status })
+}
+
+export const deleteLead = async (id: string) => {
+  return pb.collection('leads').delete(id)
+}
+
+export const bulkConfirmDocuments = async (
+  docs: Array<{ id: string; suggestedCategory?: string; currentCategory?: string }>,
+) => {
+  const accountantId = pb.authStore.record?.id
+  const results = await Promise.all(
+    docs.map((doc) => {
+      const targetCategory = doc.suggestedCategory || doc.currentCategory || 'legal'
+      const payload: Record<string, any> = {
+        category: targetCategory,
+        validation_status: 'pending',
+        validated_by: accountantId,
+        ai_adjusted: false,
+        original_suggested_category: targetCategory,
+      }
+      return pb.collection('documents').update<Document>(doc.id, payload)
+    }),
+  )
+  return results
 }
 
 export const getTaxRegimesRequirements = async (regimeType?: string) => {

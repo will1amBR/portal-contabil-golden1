@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
-import { getConfirmationDocuments, confirmDocument, type Document } from '@/services/api'
+import {
+  getConfirmationDocuments,
+  confirmDocument,
+  bulkConfirmDocuments,
+  type Document,
+} from '@/services/api'
 import { useRealtime } from '@/hooks/use-realtime'
 import {
   Table,
@@ -12,6 +17,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Select,
   SelectContent,
@@ -34,6 +40,7 @@ import {
   Calculator,
   Scale,
   Loader2,
+  Filter,
 } from 'lucide-react'
 import { format, parseISO } from 'date-fns'
 import { useToast } from '@/hooks/use-toast'
@@ -68,6 +75,8 @@ const CAT_CONFIG: Record<string, { label: string; icon: any; color: string; bg: 
 export default function AdminConfirmation() {
   const [docs, setDocs] = useState<Document[]>([])
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [selectedDocIds, setSelectedDocIds] = useState<string[]>([])
+  const [companyFilter, setCompanyFilter] = useState<string>('all')
   const [loading, setLoading] = useState(true)
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null)
   const { toast } = useToast()
@@ -89,6 +98,42 @@ export default function AdminConfirmation() {
   useRealtime('documents', () => {
     loadData()
   })
+
+  // Grouped unique companies
+  const companyOptions = Array.from(
+    new Map(
+      docs
+        .filter((d) => d.expand?.company)
+        .map((d) => [d.company, { id: d.company, name: d.expand!.company!.name }]),
+    ).values(),
+  )
+
+  const filteredDocs =
+    companyFilter === 'all' ? docs : docs.filter((d) => d.company === companyFilter)
+
+  // Selection helpers
+  const allFilteredSelected =
+    filteredDocs.length > 0 && filteredDocs.every((d) => selectedDocIds.includes(d.id))
+  const someFilteredSelected =
+    filteredDocs.some((d) => selectedDocIds.includes(d.id)) && !allFilteredSelected
+
+  const toggleSelectAll = () => {
+    if (allFilteredSelected) {
+      // Unselect all filtered docs
+      const filteredIds = new Set(filteredDocs.map((d) => d.id))
+      setSelectedDocIds((prev) => prev.filter((id) => !filteredIds.has(id)))
+    } else {
+      // Select all filtered docs
+      const newIds = new Set([...selectedDocIds, ...filteredDocs.map((d) => d.id)])
+      setSelectedDocIds(Array.from(newIds))
+    }
+  }
+
+  const toggleSelectOne = (id: string) => {
+    setSelectedDocIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+    )
+  }
 
   const handleConfirm = async (doc: Document) => {
     setActionLoadingId(doc.id)
@@ -137,25 +182,59 @@ export default function AdminConfirmation() {
     }
   }
 
-  const handleConfirmAll = async () => {
-    if (docs.length === 0) return
-    setActionLoadingId('all')
+  const handleConfirmSelected = async () => {
+    const docsToConfirm = docs.filter((d) => selectedDocIds.includes(d.id))
+    if (docsToConfirm.length === 0) return
+
+    setActionLoadingId('selected')
     try {
-      await Promise.all(
-        docs.map((doc) =>
-          confirmDocument(
-            doc.id,
-            doc.suggested_category || 'legal',
-            false,
-            doc.suggested_category || doc.category,
-          ),
-        ),
+      await bulkConfirmDocuments(
+        docsToConfirm.map((doc) => ({
+          id: doc.id,
+          suggestedCategory: doc.suggested_category || doc.category,
+        })),
       )
       toast({
-        title: 'Todos os documentos confirmados!',
-        description: `${docs.length} documentos validados conforme as sugestões da IA.`,
+        title: 'Documentos confirmados em lote!',
+        description: `${docsToConfirm.length} documento(s) confirmados com as categorias sugeridas pela IA.`,
       })
+      setSelectedDocIds([])
       await loadData()
+    } catch {
+      toast({
+        title: 'Erro na confirmação em lote',
+        description: 'Não foi possível confirmar os documentos selecionados.',
+        variant: 'destructive',
+      })
+    } finally {
+      setActionLoadingId(null)
+    }
+  }
+
+  const handleConfirmCompanyBatch = async (companyId: string, companyName: string) => {
+    const companyDocs = docs.filter((d) => d.company === companyId)
+    if (companyDocs.length === 0) return
+
+    setActionLoadingId(`company_${companyId}`)
+    try {
+      await bulkConfirmDocuments(
+        companyDocs.map((doc) => ({
+          id: doc.id,
+          suggestedCategory: doc.suggested_category || doc.category,
+        })),
+      )
+      toast({
+        title: `Lote confirmado para ${companyName}!`,
+        description: `${companyDocs.length} documento(s) da empresa avançaram na esteira com sucesso.`,
+      })
+      setSelectedDocIds((prev) => prev.filter((id) => !companyDocs.some((cd) => cd.id === id)))
+      await loadData()
+    } catch {
+      toast({
+        title: 'Erro ao confirmar lote da empresa',
+        description: 'Não foi possível confirmar os documentos da empresa.',
+        variant: 'destructive',
+      })
     } finally {
       setActionLoadingId(null)
     }
@@ -185,20 +264,135 @@ export default function AdminConfirmation() {
           </div>
         </div>
 
-        {docs.length > 1 && (
-          <Button
-            onClick={handleConfirmAll}
-            disabled={!!actionLoadingId}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm gap-2"
-          >
-            {actionLoadingId === 'all' ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <CheckCheck className="w-4 h-4" />
-            )}
-            <span>Confirmar Todos ({docs.length})</span>
-          </Button>
-        )}
+        <div className="flex flex-wrap items-center gap-2.5">
+          {selectedDocIds.length > 0 && (
+            <Button
+              onClick={handleConfirmSelected}
+              disabled={!!actionLoadingId}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm gap-2 font-semibold"
+            >
+              {actionLoadingId === 'selected' ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <CheckCheck className="w-4 h-4" />
+              )}
+              <span>Confirmar Selecionados ({selectedDocIds.length})</span>
+            </Button>
+          )}
+
+          {docs.length > 0 && selectedDocIds.length === 0 && (
+            <Button
+              onClick={() => {
+                setSelectedDocIds(filteredDocs.map((d) => d.id))
+              }}
+              variant="outline"
+              disabled={!!actionLoadingId}
+              className="bg-white hover:bg-slate-50 text-slate-700 border-slate-300 gap-2 text-xs"
+            >
+              <CheckCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Selecionar Todos ({filteredDocs.length})</span>
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Company Quick Action Cards (Aprovação em Lote por Cliente) */}
+      {companyOptions.length > 0 && docs.length > 1 && (
+        <Card className="border border-indigo-100 bg-gradient-to-r from-indigo-50/50 via-white to-indigo-50/30 shadow-xs">
+          <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-indigo-600" />
+              <CardTitle className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                Aprovação em Lote por Empresa Cliente
+              </CardTitle>
+            </div>
+            <span className="text-[11px] text-slate-500">
+              Confirme de uma vez só todos os arquivos do mesmo cliente
+            </span>
+          </CardHeader>
+          <CardContent className="p-4 pt-1 flex flex-wrap items-center gap-3">
+            {companyOptions.map((c) => {
+              const count = docs.filter((d) => d.company === c.id).length
+              const isProcessing = actionLoadingId === `company_${c.id}`
+              if (count === 0) return null
+
+              return (
+                <div
+                  key={c.id}
+                  className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-between gap-3 text-xs"
+                >
+                  <div className="min-w-0">
+                    <span className="font-bold text-slate-900 truncate block max-w-[200px]">
+                      {c.name}
+                    </span>
+                    <span className="text-[11px] text-slate-500">
+                      {count} pendência(s) de triagem
+                    </span>
+                  </div>
+
+                  <Button
+                    size="sm"
+                    onClick={() => handleConfirmCompanyBatch(c.id, c.name)}
+                    disabled={!!actionLoadingId}
+                    className="h-7 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-semibold gap-1 px-2.5"
+                  >
+                    {isProcessing ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <Check className="w-3 h-3" />
+                    )}
+                    <span>Confirmar Lote ({count})</span>
+                  </Button>
+                </div>
+              )
+            })}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Filter and Selection bar */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 bg-white rounded-xl border border-slate-200 shadow-2xs">
+        <div className="flex items-center gap-3 text-xs">
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="select-all-top"
+              checked={allFilteredSelected ? true : someFilteredSelected ? 'indeterminate' : false}
+              onCheckedChange={toggleSelectAll}
+            />
+            <label
+              htmlFor="select-all-top"
+              className="font-semibold text-slate-800 cursor-pointer select-none"
+            >
+              {allFilteredSelected
+                ? 'Desmarcar todos'
+                : `Selecionar todos da visualização (${filteredDocs.length})`}
+            </label>
+          </div>
+
+          {selectedDocIds.length > 0 && (
+            <Badge className="bg-emerald-100 text-emerald-800 border-emerald-200 text-xs">
+              {selectedDocIds.length} selecionado(s)
+            </Badge>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 text-xs w-full sm:w-auto justify-end">
+          <Filter className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-slate-500">Filtrar por Empresa:</span>
+          <Select value={companyFilter} onValueChange={setCompanyFilter}>
+            <SelectTrigger className="w-52 h-8 text-xs bg-slate-50 border-slate-200">
+              <SelectValue placeholder="Todas as empresas" />
+            </SelectTrigger>
+            <SelectContent className="bg-white">
+              <SelectItem value="all">Todas as empresas ({docs.length})</SelectItem>
+              {companyOptions.map((c) => (
+                <SelectItem key={c.id} value={c.id}>
+                  {c.name} ({docs.filter((d) => d.company === c.id).length})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Info card on workflow */}
@@ -232,6 +426,15 @@ export default function AdminConfirmation() {
             <Table>
               <TableHeader>
                 <TableRow className="bg-slate-50/80 border-b border-slate-200">
+                  <TableHead className="py-3.5 w-12 text-center">
+                    <Checkbox
+                      checked={
+                        allFilteredSelected ? true : someFilteredSelected ? 'indeterminate' : false
+                      }
+                      onCheckedChange={toggleSelectAll}
+                      aria-label="Selecionar todos os documentos"
+                    />
+                  </TableHead>
                   <TableHead className="py-3.5 text-xs font-bold text-slate-700 uppercase tracking-wider">
                     Documento
                   </TableHead>
@@ -250,14 +453,30 @@ export default function AdminConfirmation() {
                 </TableRow>
               </TableHeader>
               <TableBody className="divide-y divide-slate-100">
-                {docs.map((doc) => {
+                {filteredDocs.map((doc) => {
                   const suggestedKey = doc.suggested_category || 'legal'
                   const cat = CAT_CONFIG[suggestedKey] || CAT_CONFIG.legal
                   const Icon = cat.icon
-                  const isProcessing = actionLoadingId === doc.id || actionLoadingId === 'all'
+                  const isSelected = selectedDocIds.includes(doc.id)
+                  const isProcessing =
+                    actionLoadingId === doc.id ||
+                    actionLoadingId === 'selected' ||
+                    actionLoadingId === `company_${doc.company}`
 
                   return (
-                    <TableRow key={doc.id} className="hover:bg-slate-50/70 transition-colors">
+                    <TableRow
+                      key={doc.id}
+                      className={`hover:bg-slate-50/70 transition-colors ${
+                        isSelected ? 'bg-emerald-50/40' : ''
+                      }`}
+                    >
+                      <TableCell className="py-4 text-center">
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={() => toggleSelectOne(doc.id)}
+                          aria-label={`Selecionar ${doc.title}`}
+                        />
+                      </TableCell>
                       <TableCell className="py-4">
                         <div className="font-semibold text-slate-900 text-sm">{doc.title}</div>
                       </TableCell>

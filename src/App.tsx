@@ -15,6 +15,7 @@ import AdminConfirmation from '@/pages/admin/AdminConfirmation'
 import AdminPending from '@/pages/admin/AdminPending'
 import AdminDocuments from '@/pages/admin/AdminDocuments'
 import AdminAiPerformance from '@/pages/admin/AdminAiPerformance'
+import AdminLeads from '@/pages/admin/AdminLeads'
 import ClientDashboard from '@/pages/client/ClientDashboard'
 import ClientDocuments from '@/pages/client/ClientDocuments'
 import MonthlyReport from '@/pages/MonthlyReport'
@@ -57,6 +58,14 @@ const AppRoutes = () => (
       />
       <Route path="/documents" element={<Documents />} />
       <Route path="/chat" element={<Chat />} />
+      <Route
+        path="/admin/leads"
+        element={
+          <ProtectedRoute requireAccountant>
+            <AdminLeads />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/admin/documentos/confirmacao"
         element={
