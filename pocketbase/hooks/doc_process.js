@@ -36,6 +36,7 @@ onRecordAfterCreateSuccess((e) => {
     const embedRes = $ai.embed({ input: title })
     const record = $app.findRecordById('documents', e.record.id)
     record.set('suggested_category', category)
+    record.set('original_suggested_category', category)
     record.set('validation_status', 'pending_confirmation')
     if (payment_status !== 'n/a' && !record.getString('payment_status')) {
       record.set('payment_status', payment_status)

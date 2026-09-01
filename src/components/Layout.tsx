@@ -37,6 +37,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { RequiredDocsModal } from '@/components/RequiredDocsModal'
+import { NotificationBell } from '@/components/NotificationBell'
 import { ClientOnboardingModal } from '@/components/ClientOnboardingModal'
 import {
   getConfirmationDocuments,
@@ -118,6 +119,12 @@ export default function Layout() {
       icon: ClipboardCheck,
       count: confirmationCount,
       countColor: 'bg-indigo-500 text-white',
+    },
+    {
+      name: 'Desempenho da IA',
+      path: '/admin/ia/desempenho',
+      icon: Sparkles,
+      badge: 'Métricas',
     },
     {
       name: 'Validação Pendente',
@@ -347,6 +354,11 @@ export default function Layout() {
 
             <div className="h-5 w-px bg-slate-200 hidden sm:block" />
 
+            {/* In-Portal Notification Bell (Urgent & Upcoming Deadlines) */}
+            <NotificationBell />
+
+            <div className="h-5 w-px bg-slate-200 hidden sm:block" />
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-3 p-1.5 pl-2 pr-3 rounded-full hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all outline-none">
@@ -377,6 +389,11 @@ export default function Layout() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link to="/institucional" className="flex items-center gap-2 text-xs py-2">
+                    <Building2 className="w-4 h-4 text-emerald-600" /> Página Institucional / Planos
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/relatorios" className="flex items-center gap-2 text-xs py-2">
                     <BarChart3 className="w-4 h-4 text-emerald-600" /> Relatórios do Mês

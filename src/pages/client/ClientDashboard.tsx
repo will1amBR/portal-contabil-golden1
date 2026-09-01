@@ -12,6 +12,7 @@ import { useRealtime } from '@/hooks/use-realtime'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { ValidationBadge } from '@/components/ValidationBadge'
 import { DocumentUpload } from '@/components/DocumentUpload'
+import { BulkDocumentUpload } from '@/components/BulkDocumentUpload'
 import {
   FileText,
   Clock,
@@ -134,10 +135,17 @@ export default function ClientDashboard() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
+            <BulkDocumentUpload
+              companies={companies}
+              onSuccess={loadData}
+              buttonLabel="Upload em Lote (IA)"
+              variant="primary"
+            />
             <DocumentUpload
               companies={companies}
               onSuccess={loadData}
-              buttonLabel="Enviar Novo Arquivo"
+              buttonLabel="Envio Rápido"
+              variant="outline"
             />
             <Link to="/relatorios">
               <Button

@@ -93,10 +93,15 @@ export default function AdminConfirmation() {
   const handleConfirm = async (doc: Document) => {
     setActionLoadingId(doc.id)
     try {
-      await confirmDocument(doc.id, doc.suggested_category || 'legal')
+      await confirmDocument(
+        doc.id,
+        doc.suggested_category || 'legal',
+        false,
+        doc.suggested_category || doc.category,
+      )
       toast({
         title: 'Categoria confirmada',
-        description: `O documento "${doc.title}" foi enviado para a fila de validação.`,
+        description: `O documento "${doc.title}" foi enviado para a fila de validação (IA Acertou).`,
       })
       await loadData()
     } catch {
@@ -113,11 +118,12 @@ export default function AdminConfirmation() {
   const handleChangeCategory = async (doc: Document, category: string) => {
     setActionLoadingId(doc.id)
     try {
-      await confirmDocument(doc.id, category)
+      const wasModified = category !== (doc.suggested_category || doc.category)
+      await confirmDocument(doc.id, category, wasModified, doc.suggested_category || doc.category)
       setEditingId(null)
       toast({
-        title: 'Categoria alterada',
-        description: `Documento reclassificado para ${CAT_CONFIG[category]?.label || category}.`,
+        title: wasModified ? 'Ajuste manual registrado' : 'Categoria confirmada',
+        description: `Documento classificado como ${CAT_CONFIG[category]?.label || category}.`,
       })
       await loadData()
     } catch {
@@ -136,7 +142,14 @@ export default function AdminConfirmation() {
     setActionLoadingId('all')
     try {
       await Promise.all(
-        docs.map((doc) => confirmDocument(doc.id, doc.suggested_category || 'legal')),
+        docs.map((doc) =>
+          confirmDocument(
+            doc.id,
+            doc.suggested_category || 'legal',
+            false,
+            doc.suggested_category || doc.category,
+          ),
+        ),
       )
       toast({
         title: 'Todos os documentos confirmados!',

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T05:44:14.169Z",
+  "generatedAt": "2026-09-01T07:17:07.572Z",
   "collections": [
     {
       "name": "users",
@@ -270,6 +270,19 @@
           "required": false,
           "system": false,
           "selectValues": ["pending", "approved", "rejected", "pending_confirmation"]
+        },
+        {
+          "name": "ai_adjusted",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "original_suggested_category",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["tax", "payroll", "accounting", "legal"]
         }
       ],
       "indexes": [
@@ -330,6 +343,90 @@
           "type": "text",
           "required": false,
           "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "leads",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "company_name",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "cnpj",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "tax_regime",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["simples", "presumido", "real", "mei", "nao_sei"]
+        },
+        {
+          "name": "employees_count",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["new", "contacted", "proposal_sent", "won", "archived"]
         },
         {
           "name": "created",

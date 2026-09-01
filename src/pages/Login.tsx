@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from '@/hooks/use-auth'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 import {
   Card,
   CardContent,
@@ -121,6 +121,14 @@ export default function Login() {
               <p className="text-xs text-slate-400">Inteligência Contábil & Gestão Integrada</p>
             </div>
           </div>
+
+          <Link
+            to="/institucional"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-xs text-emerald-300 hover:text-emerald-200 transition-colors"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Conhecer a Golden & Contratar &rarr;</span>
+          </Link>
         </div>
 
         {/* Main Center Message */}
@@ -378,6 +386,14 @@ export default function Login() {
                 Entre em contato com o escritório pelo e-mail{' '}
                 <span className="font-medium text-slate-600">contato@golden.com.br</span>
               </p>
+              <div className="pt-2">
+                <Link
+                  to="/institucional"
+                  className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline inline-flex items-center gap-1"
+                >
+                  <Sparkles className="w-3.5 h-3.5" /> Conheça nossos planos e contrate a Golden
+                </Link>
+              </div>
             </CardFooter>
           </Card>
 

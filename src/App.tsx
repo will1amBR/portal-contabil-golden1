@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from '@/hooks/use-auth'
 import Layout from '@/components/Layout'
 import Index from '@/pages/Index'
 import Login from '@/pages/Login'
+import LandingPage from '@/pages/LandingPage'
 import Companies from '@/pages/Companies'
 import Documents from '@/pages/Documents'
 import Chat from '@/pages/Chat'
@@ -13,6 +14,7 @@ import NotFound from '@/pages/NotFound'
 import AdminConfirmation from '@/pages/admin/AdminConfirmation'
 import AdminPending from '@/pages/admin/AdminPending'
 import AdminDocuments from '@/pages/admin/AdminDocuments'
+import AdminAiPerformance from '@/pages/admin/AdminAiPerformance'
 import ClientDashboard from '@/pages/client/ClientDashboard'
 import ClientDocuments from '@/pages/client/ClientDocuments'
 import MonthlyReport from '@/pages/MonthlyReport'
@@ -33,6 +35,9 @@ const ProtectedRoute = ({
 
 const AppRoutes = () => (
   <Routes>
+    <Route path="/institucional" element={<LandingPage />} />
+    <Route path="/planos" element={<LandingPage />} />
+    <Route path="/contratar" element={<LandingPage />} />
     <Route path="/login" element={<Login />} />
     <Route
       element={
@@ -57,6 +62,14 @@ const AppRoutes = () => (
         element={
           <ProtectedRoute requireAccountant>
             <AdminConfirmation />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/ia/desempenho"
+        element={
+          <ProtectedRoute requireAccountant>
+            <AdminAiPerformance />
           </ProtectedRoute>
         }
       />

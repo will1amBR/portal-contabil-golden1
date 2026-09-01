@@ -3,6 +3,7 @@ import { getDocuments, getCompanies, type Document, type Company } from '@/servi
 import { useRealtime } from '@/hooks/use-realtime'
 import { DocumentTable } from '@/components/DocumentTable'
 import { DocumentUpload } from '@/components/DocumentUpload'
+import { BulkDocumentUpload } from '@/components/BulkDocumentUpload'
 import {
   Select,
   SelectContent,
@@ -108,12 +109,21 @@ export default function ClientDocuments({ category }: { category?: Document['cat
           </div>
         </div>
 
-        <DocumentUpload
-          companies={companies}
-          onSuccess={loadData}
-          defaultCategory={category}
-          buttonLabel="Enviar Arquivo"
-        />
+        <div className="flex items-center gap-2">
+          <BulkDocumentUpload
+            companies={companies}
+            onSuccess={loadData}
+            buttonLabel="Upload em Lote (IA)"
+            variant="primary"
+          />
+          <DocumentUpload
+            companies={companies}
+            onSuccess={loadData}
+            defaultCategory={category}
+            buttonLabel="Envio Individual"
+            variant="outline"
+          />
+        </div>
       </div>
 
       {/* Filters */}

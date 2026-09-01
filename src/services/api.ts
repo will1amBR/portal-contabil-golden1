@@ -13,6 +13,8 @@ export interface Document extends RecordModel {
   title: string
   category: 'tax' | 'payroll' | 'accounting' | 'legal'
   suggested_category?: 'tax' | 'payroll' | 'accounting' | 'legal'
+  original_suggested_category?: 'tax' | 'payroll' | 'accounting' | 'legal'
+  ai_adjusted?: boolean
   payment_status: 'pending' | 'paid' | 'n/a'
   validation_status: 'pending' | 'approved' | 'rejected' | 'pending_confirmation'
   validation_notes?: string
@@ -25,6 +27,18 @@ export interface Document extends RecordModel {
     company?: Company
     validated_by?: { id: string; name: string }
   }
+}
+
+export interface Lead extends RecordModel {
+  name: string
+  email: string
+  phone?: string
+  company_name?: string
+  cnpj?: string
+  tax_regime?: 'simples' | 'presumido' | 'real' | 'mei' | 'nao_sei'
+  employees_count?: string
+  message?: string
+  status: 'new' | 'contacted' | 'proposal_sent' | 'won' | 'archived'
 }
 
 export interface TaxRegimeRequirement extends RecordModel {
@@ -82,12 +96,42 @@ export const getConfirmationDocuments = async () => {
   })
 }
 
-export const confirmDocument = async (id: string, category: string) => {
-  return pb.collection('documents').update<Document>(id, {
+export const confirmDocument = async (
+  id: string,
+  category: string,
+  wasAdjusted: boolean = false,
+  originalSuggestion?: string,
+) => {
+  const payload: Record<string, any> = {
     category,
     validation_status: 'pending',
     validated_by: pb.authStore.record?.id,
+    ai_adjusted: wasAdjusted,
+  }
+  if (originalSuggestion) {
+    payload.original_suggested_category = originalSuggestion
+  }
+  return pb.collection('documents').update<Document>(id, payload)
+}
+
+export const createLead = async (leadData: {
+  name: string
+  email: string
+  phone?: string
+  company_name?: string
+  cnpj?: string
+  tax_regime?: string
+  employees_count?: string
+  message?: string
+}) => {
+  return pb.collection('leads').create<Lead>({
+    ...leadData,
+    status: 'new',
   })
+}
+
+export const getLeads = async () => {
+  return pb.collection('leads').getFullList<Lead>({ sort: '-created' })
 }
 
 export const getTaxRegimesRequirements = async (regimeType?: string) => {
