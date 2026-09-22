@@ -87,15 +87,28 @@ export default function LandingPage() {
       toast({
         title: 'Proposta solicitada com sucesso!',
         description:
-          'Nossa equipe de consultores contábeis entrará em contato em menos de 2 horas úteis.',
+          'Nossa equipe contábil recebeu seus dados e entrará em contato em breve por e-mail e WhatsApp!',
       })
     } catch (err: any) {
-      toast({
-        title: 'Erro ao enviar solicitação',
-        description:
-          err?.message || 'Tente novamente ou envie um e-mail para contato@golden.com.br',
-        variant: 'destructive',
-      })
+      const isRateLimited = err?.status === 429 || err?.response?.code === 429
+      if (isRateLimited) {
+        toast({
+          title: 'Muitas solicitações enviadas',
+          description:
+            err?.response?.message ||
+            'Por segurança anti-spam, aguarde alguns minutos antes de enviar nova mensagem.',
+          variant: 'destructive',
+        })
+      } else {
+        toast({
+          title: 'Erro ao enviar solicitação',
+          description:
+            err?.response?.message ||
+            err?.message ||
+            'Tente novamente ou envie um e-mail para contato@golden.com.br',
+          variant: 'destructive',
+        })
+      }
     } finally {
       setLoading(false)
     }

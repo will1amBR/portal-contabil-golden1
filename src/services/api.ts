@@ -148,7 +148,14 @@ export const deleteLead = async (id: string) => {
 }
 
 export const bulkConfirmDocuments = async (
-  docs: Array<{ id: string; suggestedCategory?: string; currentCategory?: string }>,
+  docs: Array<{
+    id: string
+    suggestedCategory?: string
+    currentCategory?: string
+    title?: string
+    company?: string
+  }>,
+  note?: string,
 ) => {
   const accountantId = pb.authStore.record?.id
   const results = await Promise.all(
@@ -164,6 +171,30 @@ export const bulkConfirmDocuments = async (
       return pb.collection('documents').update<Document>(doc.id, payload)
     }),
   )
+
+  // Dispara notificação consolidada por e-mail para cada cliente com documentos no lote
+  try {
+    const notifyItems = results.map((r, idx) => ({
+      id: r.id,
+      name: r.title || docs[idx]?.title || 'Documento',
+      category: r.category || docs[idx]?.suggestedCategory || docs[idx]?.currentCategory || 'legal',
+      companyId: r.company || docs[idx]?.company,
+    }))
+
+    await pb.send('/backend/v1/bulk-confirm-notify', {
+      method: 'POST',
+      body: {
+        items: notifyItems,
+        note: note || '',
+      },
+    })
+  } catch (notifyErr) {
+    console.warn(
+      '[bulkConfirmDocuments] Notificação consolidada por e-mail não enviada:',
+      notifyErr,
+    )
+  }
+
   return results
 }
 
@@ -225,7 +256,7 @@ export const getNotificationReminders = async (limit = 50) => {
 
 export const triggerRemindersCheck = async () => {
   try {
-    const res = await pb.send('/api/reminders/trigger-check', {
+    const res = await pb.send('/backend/v1/reminders/trigger-check', {
       method: 'POST',
     })
     return res

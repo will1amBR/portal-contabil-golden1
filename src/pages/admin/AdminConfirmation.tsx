@@ -191,12 +191,16 @@ export default function AdminConfirmation() {
       await bulkConfirmDocuments(
         docsToConfirm.map((doc) => ({
           id: doc.id,
+          title: doc.title,
+          company: doc.company,
           suggestedCategory: doc.suggested_category || doc.category,
+          currentCategory: doc.category,
         })),
+        'Validação em lote realizada com sucesso pela equipe Golden.',
       )
       toast({
         title: 'Documentos confirmados em lote!',
-        description: `${docsToConfirm.length} documento(s) confirmados com as categorias sugeridas pela IA.`,
+        description: `${docsToConfirm.length} documento(s) confirmados com sucesso. O cliente recebeu a notificação consolidada por e-mail.`,
       })
       setSelectedDocIds([])
       await loadData()
@@ -220,12 +224,16 @@ export default function AdminConfirmation() {
       await bulkConfirmDocuments(
         companyDocs.map((doc) => ({
           id: doc.id,
+          title: doc.title,
+          company: doc.company,
           suggestedCategory: doc.suggested_category || doc.category,
+          currentCategory: doc.category,
         })),
+        `Validação em lote aprovada para a empresa ${companyName}.`,
       )
       toast({
         title: `Lote confirmado para ${companyName}!`,
-        description: `${companyDocs.length} documento(s) da empresa avançaram na esteira com sucesso.`,
+        description: `${companyDocs.length} documento(s) confirmados. E-mail consolidado disparado para o cliente.`,
       })
       setSelectedDocIds((prev) => prev.filter((id) => !companyDocs.some((cd) => cd.id === id)))
       await loadData()

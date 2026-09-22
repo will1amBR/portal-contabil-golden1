@@ -66,11 +66,26 @@ export default function Login() {
     setLoading(true)
     const { error } = await signIn(email.trim(), pass)
     if (error) {
-      toast({
-        title: 'Acesso não autorizado',
-        description: 'E-mail ou senha incorretos. Verifique suas credenciais e tente novamente.',
-        variant: 'destructive',
-      })
+      const errObj = error as any
+      const isRateLimited =
+        errObj?.status === 429 ||
+        errObj?.response?.code === 429 ||
+        (typeof errObj?.message === 'string' && errObj?.message.includes('429'))
+      if (isRateLimited) {
+        toast({
+          title: 'Acesso Temporariamente Suspenso',
+          description:
+            errObj?.response?.message ||
+            'Muitas tentativas de login com erro. Por motivos de segurança, aguarde alguns minutos antes de tentar novamente.',
+          variant: 'destructive',
+        })
+      } else {
+        toast({
+          title: 'Acesso não autorizado',
+          description: 'E-mail ou senha incorretos. Verifique suas credenciais e tente novamente.',
+          variant: 'destructive',
+        })
+      }
     } else {
       toast({
         title: 'Bem-vindo ao Portal!',

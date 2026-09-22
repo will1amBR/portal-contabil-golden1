@@ -23,6 +23,7 @@ import {
   User,
   UserPlus,
   ExternalLink,
+  TrendingUp,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -131,6 +132,12 @@ export default function Layout() {
       count: newLeadsCount,
       countColor: 'bg-blue-500 text-white',
       badge: newLeadsCount > 0 ? null : 'Landing',
+    },
+    {
+      name: 'Conversão de Leads',
+      path: '/admin/leads/conversao',
+      icon: TrendingUp,
+      badge: 'Funil',
     },
     {
       name: 'Triagem & Confirmação',

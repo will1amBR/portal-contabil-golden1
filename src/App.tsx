@@ -16,6 +16,7 @@ import AdminPending from '@/pages/admin/AdminPending'
 import AdminDocuments from '@/pages/admin/AdminDocuments'
 import AdminAiPerformance from '@/pages/admin/AdminAiPerformance'
 import AdminLeads from '@/pages/admin/AdminLeads'
+import AdminLeadConversion from '@/pages/admin/AdminLeadConversion'
 import ClientDashboard from '@/pages/client/ClientDashboard'
 import ClientDocuments from '@/pages/client/ClientDocuments'
 import MonthlyReport from '@/pages/MonthlyReport'
@@ -30,7 +31,7 @@ const ProtectedRoute = ({
   const { isAuthenticated, loading, isAccountant } = useAuth()
   if (loading) return null
   if (!isAuthenticated) return <Navigate to="/login" replace />
-  if (requireAccountant && !isAccountant) return <Navigate to="/" replace />
+  if (requireAccountant && !isAccountant) return <Navigate to="/cliente/dashboard" replace />
   return <>{children}</>
 }
 
@@ -63,6 +64,14 @@ const AppRoutes = () => (
         element={
           <ProtectedRoute requireAccountant>
             <AdminLeads />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/leads/conversao"
+        element={
+          <ProtectedRoute requireAccountant>
+            <AdminLeadConversion />
           </ProtectedRoute>
         }
       />

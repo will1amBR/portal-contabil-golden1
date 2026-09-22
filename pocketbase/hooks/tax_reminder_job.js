@@ -174,7 +174,7 @@ cronAdd('tax_obligation_reminders', '0 8 * * *', () => {
 // HTTP Endpoint to trigger manual dispatch / test check from UI (accountant or client)
 routerAdd(
   'POST',
-  '/api/reminders/trigger-check',
+  '/backend/v1/reminders/trigger-check',
   (e) => {
     try {
       const companies = $app.findRecordsByFilter('companies', "status = 'active'", 'name', 500, 0)

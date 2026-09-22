@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { getLeads, updateLeadStatus, deleteLead, type Lead, type LeadStatus } from '@/services/api'
 import { useRealtime } from '@/hooks/use-realtime'
 import {
@@ -270,17 +271,31 @@ export default function AdminLeads() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3 bg-slate-900/90 border border-slate-800 p-3.5 rounded-xl text-xs">
-            <div className="text-right">
-              <span className="text-slate-400 block text-[11px]">Total no Funil</span>
-              <span className="text-xl font-bold text-emerald-400 font-mono">
-                {leads.length} Leads
-              </span>
-            </div>
-            <div className="h-8 w-px bg-slate-800" />
-            <div className="text-right">
-              <span className="text-slate-400 block text-[11px]">Novos (Urgentes)</span>
-              <span className="text-xl font-bold text-amber-400 font-mono">{statusCounts.new}</span>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to="/admin/leads/conversao">
+              <Button
+                variant="outline"
+                className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border-emerald-500/40 text-xs h-10 font-semibold gap-2 shadow-sm"
+              >
+                <TrendingUp className="w-4 h-4 text-emerald-400" />
+                <span>Relatório de Conversão</span>
+              </Button>
+            </Link>
+
+            <div className="flex items-center gap-3 bg-slate-900/90 border border-slate-800 p-2.5 px-3.5 rounded-xl text-xs">
+              <div className="text-right">
+                <span className="text-slate-400 block text-[11px]">Total no Funil</span>
+                <span className="text-xl font-bold text-emerald-400 font-mono">
+                  {leads.length} Leads
+                </span>
+              </div>
+              <div className="h-8 w-px bg-slate-800" />
+              <div className="text-right">
+                <span className="text-slate-400 block text-[11px]">Novos</span>
+                <span className="text-xl font-bold text-amber-400 font-mono">
+                  {statusCounts.new}
+                </span>
+              </div>
             </div>
           </div>
         </div>

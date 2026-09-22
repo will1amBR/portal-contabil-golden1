@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T07:38:18.879Z",
+  "generatedAt": "2026-09-22T03:28:38.638Z",
   "collections": [
     {
       "name": "users",
@@ -444,6 +444,58 @@
         }
       ],
       "indexes": []
+    },
+    {
+      "name": "rate_limits",
+      "type": "base",
+      "apiRules": {
+        "list": null,
+        "view": null,
+        "create": null,
+        "update": null,
+        "delete": null
+      },
+      "fields": [
+        {
+          "name": "key",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "reset_at",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "blocked_until",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": ["CREATE UNIQUE INDEX idx_rate_limits_key ON rate_limits (key)"]
     }
   ]
 }

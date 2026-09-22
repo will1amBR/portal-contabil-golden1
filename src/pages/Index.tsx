@@ -167,12 +167,16 @@ export default function Index() {
       await bulkConfirmDocuments(
         docsToConfirm.map((d) => ({
           id: d.id,
+          title: d.title,
+          company: d.company,
           suggestedCategory: d.suggested_category || d.category,
+          currentCategory: d.category,
         })),
+        'Homologação em lote realizada pelo Centro de Comando Golden.',
       )
       toast({
         title: 'Aprovação em lote concluída!',
-        description: `${docsToConfirm.length} documento(s) confirmados com as categorias sugeridas pela IA.`,
+        description: `${docsToConfirm.length} documento(s) validados. O cliente recebeu a confirmação consolidada por e-mail.`,
       })
       setSelectedDocIds([])
       await loadData()
@@ -196,12 +200,16 @@ export default function Index() {
       await bulkConfirmDocuments(
         companyDocs.map((d) => ({
           id: d.id,
+          title: d.title,
+          company: d.company,
           suggestedCategory: d.suggested_category || d.category,
+          currentCategory: d.category,
         })),
+        `Homologação em lote concluída para a empresa ${companyName}.`,
       )
       toast({
         title: `Lote confirmado para ${companyName}!`,
-        description: `${companyDocs.length} documento(s) da empresa avançaram na esteira com sucesso.`,
+        description: `${companyDocs.length} documento(s) validados com sucesso. Notificação consolidada enviada por e-mail ao cliente.`,
       })
       setSelectedDocIds((prev) => prev.filter((id) => !companyDocs.some((cd) => cd.id === id)))
       await loadData()
