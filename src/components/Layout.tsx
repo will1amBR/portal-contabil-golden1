@@ -113,7 +113,7 @@ export default function Layout() {
   })
 
   const clientNav = [
-    { name: 'Visão Geral', path: '/cliente/dashboard', icon: LayoutDashboard, badge: null },
+    { name: 'Visão Geral', path: '/', icon: LayoutDashboard, badge: null },
     { name: 'Todos Documentos', path: '/cliente/documentos', icon: FileText, badge: null },
     { name: 'Guias Fiscais', path: '/cliente/guias', icon: Receipt, badge: 'Impostos' },
     { name: 'Holerites & RH', path: '/cliente/holerites', icon: Wallet, badge: null },
@@ -416,8 +416,9 @@ export default function Layout() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="/institucional" className="flex items-center gap-2 text-xs py-2">
-                    <Building2 className="w-4 h-4 text-emerald-600" /> Página Institucional / Planos
+                  <Link to="/sobre" className="flex items-center gap-2 text-xs py-2">
+                    <Building2 className="w-4 h-4 text-emerald-600" /> Portal Público /
+                    Institucional
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">

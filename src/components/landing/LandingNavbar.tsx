@@ -35,7 +35,7 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link to="/institucional" className="flex items-center gap-3 group">
+        <Link to="/" className="flex items-center gap-3 group">
           <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center shadow-lg shadow-emerald-500/20 ring-1 ring-emerald-300/30 group-hover:scale-105 transition-transform">
             <Building2 className="w-6 h-6 text-white" />
           </div>
@@ -50,34 +50,58 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
             </span>
           </div>
         </Link>
-
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
+          <Link
+            to="/"
+            className={`transition-colors flex items-center gap-1 ${
+              location.pathname === '/'
+                ? 'text-emerald-400 font-semibold'
+                : 'hover:text-emerald-400'
+            }`}
+          >
+            Home
+          </Link>
           <Link
             to="/institucional"
-            className="hover:text-emerald-400 transition-colors flex items-center gap-1"
+            className={`transition-colors flex items-center gap-1 ${
+              location.pathname === '/institucional'
+                ? 'text-emerald-400 font-semibold'
+                : 'hover:text-emerald-400'
+            }`}
           >
-            Início
+            Institucional
           </Link>
-          <a href="#funcionalidades" className="hover:text-emerald-400 transition-colors">
-            Funções Entregues
-          </a>
           <Link
             to="/planos"
-            className="hover:text-emerald-400 transition-colors flex items-center gap-1.5"
+            className={`transition-colors flex items-center gap-1.5 ${
+              location.pathname === '/planos'
+                ? 'text-emerald-400 font-semibold'
+                : 'hover:text-emerald-400'
+            }`}
           >
             <span>Planos & Preços</span>
             <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold px-1.5 py-0.2 rounded-full">
               Comparativo
             </span>
           </Link>
-          <a href="#como-funciona" className="hover:text-emerald-400 transition-colors">
-            Como Funciona
-          </a>
-          <a href="#faq" className="hover:text-emerald-400 transition-colors">
-            Dúvidas
-          </a>
-          <Link to="/contratar" className="hover:text-emerald-400 transition-colors">
+          <Link
+            to="/institucional#funcionalidades"
+            className="hover:text-emerald-400 transition-colors"
+          >
+            Funcionalidades
+          </Link>
+          <Link to="/institucional#faq" className="hover:text-emerald-400 transition-colors">
+            FAQ
+          </Link>
+          <Link
+            to="/contratar"
+            className={`transition-colors ${
+              location.pathname === '/contratar'
+                ? 'text-emerald-400 font-semibold'
+                : 'hover:text-emerald-400'
+            }`}
+          >
             Contratar
           </Link>
         </nav>
@@ -94,7 +118,7 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
             </Button>
           </Link>
 
-          <a href="#contratar">
+          <Link to="/contratar">
             <Button
               onClick={() => onSelectPlanCta && onSelectPlanCta('simples')}
               className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold h-10 px-4 shadow-md shadow-emerald-600/20 gap-2"
@@ -102,7 +126,7 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
               <span>Contratar Agora</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile menu toggle */}
@@ -132,55 +156,71 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
         <div className="lg:hidden border-b border-slate-800 bg-slate-950 px-4 pt-3 pb-6 space-y-4 animate-fade-in">
           <nav className="flex flex-col space-y-3 text-sm font-medium text-slate-300">
             <Link
+              to="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`p-2 rounded-lg ${
+                location.pathname === '/'
+                  ? 'bg-slate-900 text-emerald-400 font-bold'
+                  : 'hover:bg-slate-900 hover:text-emerald-400'
+              }`}
+            >
+              Home (A Golden)
+            </Link>
+            <Link
               to="/institucional"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-slate-900 hover:text-emerald-400"
+              className={`p-2 rounded-lg ${
+                location.pathname === '/institucional'
+                  ? 'bg-slate-900 text-emerald-400 font-bold'
+                  : 'hover:bg-slate-900 hover:text-emerald-400'
+              }`}
             >
-              Início Institucional
+              Institucional (Portal & Soluções)
             </Link>
-            <a
-              href="#funcionalidades"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-slate-900 hover:text-emerald-400"
-            >
-              Funções Entregues do Portal
-            </a>
             <Link
               to="/planos"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-slate-900 hover:text-emerald-400 flex items-center justify-between"
+              className={`p-2 rounded-lg flex items-center justify-between ${
+                location.pathname === '/planos'
+                  ? 'bg-slate-900 text-emerald-400 font-bold'
+                  : 'hover:bg-slate-900 hover:text-emerald-400'
+              }`}
             >
               <span>Planos & Tabela Comparativa</span>
               <span className="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full font-bold">
                 Novo
               </span>
             </Link>
-            <a
-              href="#como-funciona"
+            <Link
+              to="/institucional#funcionalidades"
               onClick={() => setMobileMenuOpen(false)}
               className="p-2 rounded-lg hover:bg-slate-900 hover:text-emerald-400"
             >
-              Como Funciona a Parceria
-            </a>
-            <a
-              href="#faq"
+              Funções Entregues do Portal
+            </Link>
+            <Link
+              to="/institucional#faq"
               onClick={() => setMobileMenuOpen(false)}
               className="p-2 rounded-lg hover:bg-slate-900 hover:text-emerald-400"
             >
               Perguntas Frequentes (FAQ)
-            </a>
+            </Link>
             <Link
               to="/contratar"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-slate-900 hover:text-emerald-400 text-emerald-400 font-bold"
+              className={`p-2 rounded-lg font-bold ${
+                location.pathname === '/contratar'
+                  ? 'bg-emerald-600/20 text-emerald-400'
+                  : 'hover:bg-slate-900 text-emerald-400'
+              }`}
             >
               Contratar / Solicitar Proposta
             </Link>
           </nav>
 
           <div className="pt-2 border-t border-slate-800 flex flex-col gap-2">
-            <a
-              href="#contratar"
+            <Link
+              to="/contratar"
               onClick={() => {
                 setMobileMenuOpen(false)
                 if (onSelectPlanCta) onSelectPlanCta('simples')
@@ -189,13 +229,13 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
               <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-11 text-sm shadow-md">
                 Solicitar Proposta Agora &rarr;
               </Button>
-            </a>
+            </Link>
             <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
               <Button
                 variant="outline"
                 className="w-full bg-slate-900 text-slate-200 border-slate-700 text-xs h-10"
               >
-                Acessar Portal do Cliente (Login)
+                Acessar Área do Cliente (Login)
               </Button>
             </Link>
           </div>

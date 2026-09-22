@@ -15,6 +15,15 @@ export default function LandingPage() {
   const location = useLocation()
   const [selectedRegime, setSelectedRegime] = useState('simples')
 
+  // Read query params (e.g. /contratar?regime=presumido)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const regimeParam = params.get('regime')
+    if (regimeParam) {
+      setSelectedRegime(regimeParam)
+    }
+  }, [location.search])
+
   // Smooth scroll to relevant sections based on route or hash
   useEffect(() => {
     if (location.pathname === '/planos') {

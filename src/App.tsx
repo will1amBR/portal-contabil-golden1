@@ -7,6 +7,7 @@ import Layout from '@/components/Layout'
 import Index from '@/pages/Index'
 import Login from '@/pages/Login'
 import LandingPage from '@/pages/LandingPage'
+import PublicHome from '@/pages/PublicHome'
 import Companies from '@/pages/Companies'
 import Documents from '@/pages/Documents'
 import Chat from '@/pages/Chat'
@@ -35,12 +36,37 @@ const ProtectedRoute = ({
   return <>{children}</>
 }
 
+// Componente que decide o destino de "/":
+// - Se NÃO autenticado: exibe a Home Pública da Golden (apresentação institucional, serviços, equipe, diferenciais)
+// - Se autenticado: renderiza o Layout autenticado com Index (Centro de Comando para contador, ou ClientDashboard para cliente)
+const RootRoute = () => {
+  const { isAuthenticated, loading } = useAuth()
+  if (loading) return null
+  if (!isAuthenticated) {
+    return <PublicHome />
+  }
+  return (
+    <ProtectedRoute>
+      <Layout />
+    </ProtectedRoute>
+  )
+}
+
 const AppRoutes = () => (
   <Routes>
+    {/* Rota raiz: se deslogado, mostra PublicHome; se logado, aninha no Layout com Index */}
+    <Route path="/" element={<RootRoute />}>
+      <Route index element={<Index />} />
+    </Route>
+
+    {/* Páginas públicas institucionais */}
+    <Route path="/sobre" element={<PublicHome />} />
     <Route path="/institucional" element={<LandingPage />} />
     <Route path="/planos" element={<LandingPage />} />
     <Route path="/contratar" element={<LandingPage />} />
     <Route path="/login" element={<Login />} />
+
+    {/* Rotas autenticadas protegidas */}
     <Route
       element={
         <ProtectedRoute>
@@ -48,7 +74,7 @@ const AppRoutes = () => (
         </ProtectedRoute>
       }
     >
-      <Route path="/" element={<Index />} />
+      <Route path="/dashboard" element={<Index />} />
       <Route
         path="/companies"
         element={

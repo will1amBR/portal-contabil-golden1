@@ -44,12 +44,12 @@ export function LandingFooter() {
               </span>
             </Link>
 
-            <a href="#contratar">
+            <Link to="/contratar">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer transition-colors shadow-md">
                 <span>Quero Contratar</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -87,75 +87,74 @@ export function LandingFooter() {
             </div>
           </div>
 
-          {/* Col 2: Soluções & Planos */}
+          {/* Col 2: Institucional & Navegação */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Planos Contábeis
-            </h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">Institucional</h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <a href="#planos" className="hover:text-emerald-400 transition-colors">
-                  Simples Nacional (desde R$ 149)
-                </a>
+                <Link to="/" className="hover:text-emerald-400 transition-colors">
+                  Home (A Golden)
+                </Link>
               </li>
               <li>
-                <a href="#planos" className="hover:text-emerald-400 transition-colors">
-                  Lucro Presumido (desde R$ 249)
-                </a>
+                <Link to="/institucional" className="hover:text-emerald-400 transition-colors">
+                  Sobre a Empresa & Portal
+                </Link>
               </li>
               <li>
-                <a href="#planos" className="hover:text-emerald-400 transition-colors">
-                  Lucro Real / Corporativo
-                </a>
+                <Link to="/planos" className="hover:text-emerald-400 transition-colors">
+                  Planos & Preços (Comparativo)
+                </Link>
               </li>
               <li>
-                <a href="#planos" className="hover:text-emerald-400 transition-colors">
-                  Tabela Comparativa de Planos
-                </a>
+                <Link to="/contratar" className="hover:text-emerald-400 transition-colors">
+                  Solicitar Proposta Comercial
+                </Link>
               </li>
               <li>
-                <a href="#contratar" className="hover:text-emerald-400 transition-colors">
-                  Migração Gratuita de Contador
-                </a>
+                <Link to="/login" className="hover:text-emerald-400 transition-colors">
+                  Área do Cliente (Login)
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Portal & Recursos */}
+          {/* Col 3: Soluções & Planos */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Funções Entregues
+              Planos & Regimes
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <a href="#funcionalidades" className="hover:text-emerald-400 transition-colors">
+                <Link to="/planos" className="hover:text-emerald-400 transition-colors">
+                  Simples Nacional (desde R$ 149)
+                </Link>
+              </li>
+              <li>
+                <Link to="/planos" className="hover:text-emerald-400 transition-colors">
+                  Lucro Presumido (desde R$ 249)
+                </Link>
+              </li>
+              <li>
+                <Link to="/planos" className="hover:text-emerald-400 transition-colors">
+                  Lucro Real / Corporativo
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/institucional#funcionalidades"
+                  className="hover:text-emerald-400 transition-colors"
+                >
                   Triagem com Inteligência Artificial
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#funcionalidades" className="hover:text-emerald-400 transition-colors">
-                  Upload em Lote com Drag & Drop
-                </a>
-              </li>
-              <li>
-                <a href="#funcionalidades" className="hover:text-emerald-400 transition-colors">
+                <Link
+                  to="/institucional#funcionalidades"
+                  className="hover:text-emerald-400 transition-colors"
+                >
                   Calendário Fiscal com Semáforo
-                </a>
-              </li>
-              <li>
-                <a href="#funcionalidades" className="hover:text-emerald-400 transition-colors">
-                  Sino de Alertas & Notificações
-                </a>
-              </li>
-              <li>
-                <a href="#funcionalidades" className="hover:text-emerald-400 transition-colors">
-                  Relatório Mensal com Exportação PDF
-                </a>
-              </li>
-              <li>
-                <a href="#funcionalidades" className="hover:text-emerald-400 transition-colors">
-                  Assistente Contábil com IA 24/7
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -196,13 +195,17 @@ export function LandingFooter() {
           </p>
 
           <div className="flex items-center gap-4">
+            <Link to="/" className="hover:text-emerald-400 transition-colors">
+              Home Golden
+            </Link>
+            <span>&bull;</span>
             <Link to="/login" className="hover:text-emerald-400 transition-colors">
               Área do Cliente
             </Link>
             <span>&bull;</span>
-            <a href="#faq" className="hover:text-emerald-400 transition-colors">
+            <Link to="/institucional#faq" className="hover:text-emerald-400 transition-colors">
               Perguntas Frequentes
-            </a>
+            </Link>
             <span>&bull;</span>
             <span className="text-slate-400">Termos de Uso & LGPD</span>
           </div>

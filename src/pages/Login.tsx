@@ -138,11 +138,11 @@ export default function Login() {
           </div>
 
           <Link
-            to="/institucional"
+            to="/"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-xs text-emerald-300 hover:text-emerald-200 transition-colors"
           >
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Conhecer a Golden & Contratar &rarr;</span>
+            <span>Conhecer a Golden &bull; Página Inicial &rarr;</span>
           </Link>
         </div>
 
@@ -401,12 +401,26 @@ export default function Login() {
                 Entre em contato com o escritório pelo e-mail{' '}
                 <span className="font-medium text-slate-600">contato@golden.com.br</span>
               </p>
-              <div className="pt-2">
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
                 <Link
-                  to="/institucional"
+                  to="/"
                   className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline inline-flex items-center gap-1"
                 >
-                  <Sparkles className="w-3.5 h-3.5" /> Conheça nossos planos e contrate a Golden
+                  <Sparkles className="w-3.5 h-3.5" /> Conhecer a Golden (Home)
+                </Link>
+                <span className="text-slate-300">&bull;</span>
+                <Link
+                  to="/planos"
+                  className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline inline-flex items-center gap-1"
+                >
+                  Ver Planos
+                </Link>
+                <span className="text-slate-300">&bull;</span>
+                <Link
+                  to="/contratar"
+                  className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline inline-flex items-center gap-1"
+                >
+                  Contratar
                 </Link>
               </div>
             </CardFooter>
