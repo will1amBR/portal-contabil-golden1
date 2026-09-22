@@ -168,47 +168,47 @@ export function LandingFeaturesDelivery() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 text-xs font-semibold px-3 py-1">
-            <Sparkles className="w-3.5 h-3.5 mr-1 text-emerald-400 inline" />
-            Entregas Reais &bull; Já Funcionando no Portal
+          <Badge className="bg-slate-900 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
+            <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-400 inline" />
+            Entregas Concretas &bull; Infraestrutura Ativa
           </Badge>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
             Tudo o que sua empresa recebe desde o primeiro dia
           </h2>
-          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-            Nada de promessas abstratas. Conheça as funcionalidades que os clientes da{' '}
-            <strong>Golden Contabilidade</strong> já utilizam diariamente para manter suas empresas
-            100% blindadas e em dia com o Fisco.
+          <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+            Sem promessas abstratas: conheça as ferramentas que os clientes da{' '}
+            <strong>Golden Contabilidade</strong> utilizam diariamente para manter suas empresas
+            seguras perante o Fisco e com finanças organizadas.
           </p>
         </div>
 
         {/* Category Tabs Filter */}
         <div className="flex justify-center">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-2xl">
-            <TabsList className="grid grid-cols-4 bg-slate-900 border border-slate-800 p-1 rounded-xl h-auto">
+            <TabsList className="grid grid-cols-4 bg-slate-900 border border-slate-800 p-1 rounded-lg h-auto">
               <TabsTrigger
                 value="all"
-                className="text-xs sm:text-sm py-2 data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-lg text-slate-300"
+                className="text-xs sm:text-sm py-2 data-[state=active]:bg-amber-600 data-[state=active]:text-slate-950 data-[state=active]:font-bold rounded-md text-slate-200"
               >
                 Todas (12)
               </TabsTrigger>
               <TabsTrigger
                 value="automation"
-                className="text-xs sm:text-sm py-2 data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-lg text-slate-300"
+                className="text-xs sm:text-sm py-2 data-[state=active]:bg-amber-600 data-[state=active]:text-slate-950 data-[state=active]:font-bold rounded-md text-slate-200"
               >
-                IA & Automação
+                Triagem & IA
               </TabsTrigger>
               <TabsTrigger
                 value="compliance"
-                className="text-xs sm:text-sm py-2 data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-lg text-slate-300"
+                className="text-xs sm:text-sm py-2 data-[state=active]:bg-amber-600 data-[state=active]:text-slate-950 data-[state=active]:font-bold rounded-md text-slate-200"
               >
                 Fiscal & Prazos
               </TabsTrigger>
               <TabsTrigger
                 value="communication"
-                className="text-xs sm:text-sm py-2 data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-lg text-slate-300"
+                className="text-xs sm:text-sm py-2 data-[state=active]:bg-amber-600 data-[state=active]:text-slate-950 data-[state=active]:font-bold rounded-md text-slate-200"
               >
-                Alertas & Chat
+                Alertas & Contato
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -221,36 +221,34 @@ export function LandingFeaturesDelivery() {
             return (
               <Card
                 key={feat.id}
-                className="border border-slate-800 bg-slate-900/70 hover:bg-slate-900 hover:border-emerald-500/50 transition-all duration-200 shadow-md rounded-2xl group flex flex-col justify-between"
+                className="border border-slate-800 bg-slate-900/90 hover:border-slate-700 transition-all shadow-sm rounded-xl flex flex-col justify-between"
               >
                 <CardContent className="p-6 space-y-4">
                   {/* Card top */}
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-500/20 transition-all">
-                      <IconComponent className="w-6 h-6" />
+                    <div className="w-11 h-11 rounded-lg bg-slate-950 border border-slate-800 text-amber-400 flex items-center justify-center">
+                      <IconComponent className="w-5 h-5" />
                     </div>
-                    <Badge className="bg-slate-800 text-slate-300 border-slate-700 text-[10px] font-medium">
+                    <Badge className="bg-slate-950 text-slate-200 border-slate-800 text-[11px] font-medium px-2 py-0.5">
                       {feat.badge}
                     </Badge>
                   </div>
 
                   {/* Title & Tagline */}
                   <div className="space-y-1">
-                    <h3 className="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">
-                      {feat.title}
-                    </h3>
-                    <p className="text-xs font-semibold text-emerald-400/90 leading-snug">
+                    <h3 className="text-lg font-bold text-white">{feat.title}</h3>
+                    <p className="text-xs sm:text-sm font-semibold text-amber-300/90 leading-snug">
                       {feat.tagline}
                     </p>
                   </div>
 
-                  {/* Description */}
-                  <p className="text-sm text-slate-300 leading-relaxed">{feat.description}</p>
+                  {/* Description com excelente contraste para leitura 40+ */}
+                  <p className="text-sm text-slate-200 leading-relaxed">{feat.description}</p>
                 </CardContent>
 
                 {/* Proof footer inside card */}
-                <div className="px-6 py-3 bg-slate-950/80 border-t border-slate-800/80 rounded-b-2xl text-[11px] text-slate-400 flex items-center gap-1.5">
-                  <FileCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <div className="px-6 py-3 bg-slate-950 border-t border-slate-800 rounded-b-xl text-xs text-slate-300 flex items-center gap-2">
+                  <FileCheck className="w-4 h-4 text-amber-400 shrink-0" />
                   <span className="truncate">{feat.proof}</span>
                 </div>
               </Card>
@@ -258,23 +256,22 @@ export function LandingFeaturesDelivery() {
           })}
         </div>
 
-        {/* Bottom Banner callout */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-950 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+        {/* Bottom Banner callout sólido */}
+        <div className="p-6 sm:p-8 rounded-xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-1 text-center sm:text-left">
             <h4 className="text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
-              <Sparkles className="w-5 h-5 text-emerald-400" />
-              Quer ver tudo isso funcionando na prática?
+              <Sparkles className="w-5 h-5 text-amber-400" />
+              Deseja conhecer como aplicamos isso ao seu segmento?
             </h4>
             <p className="text-xs sm:text-sm text-slate-300">
-              Acesse a área de demonstração ou solicite uma proposta personalizada para a sua
-              empresa.
+              Solicite um diagnóstico fiscal prévio sem qualquer custo ou compromisso.
             </p>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
             <a href="#contratar">
-              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer">
-                <span>Solicitar Proposta Agora</span>
+              <span className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-sm shadow-md transition-all cursor-pointer">
+                <span>Solicitar Proposta Comercial</span>
                 <ArrowRight className="w-4 h-4" />
               </span>
             </a>

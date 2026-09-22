@@ -56,7 +56,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-amber-700 selection:text-white">
       {/* 1. Header / Navigation */}
       <LandingNavbar onSelectPlanCta={handleSelectPlan} />
 

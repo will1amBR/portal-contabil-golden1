@@ -116,25 +116,21 @@ export function LandingLeadForm({
   return (
     <section
       id="contratar"
-      className="py-24 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 border-t border-slate-800 relative overflow-hidden"
+      className="py-24 bg-slate-950 border-t border-slate-800 relative overflow-hidden"
     >
-      {/* Decorative glows */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
         {/* Top Callout */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 text-xs font-semibold px-3 py-1">
-            <Sparkles className="w-3.5 h-3.5 mr-1 text-emerald-400 inline" />
-            Contratação 100% Online & Sem Burocracia
+          <Badge className="bg-slate-900 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
+            <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-400 inline" />
+            Contratação Assistida &bull; Sem Custos de Adesão
           </Badge>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            Pronto para colocar sua contabilidade no piloto automático?
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+            Pronto para ter segurança tributária no seu CNPJ?
           </h2>
-          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-            Preencha a ficha abaixo para receber uma proposta personalizada em até 2 horas úteis.
-            Migração de contador sem custo de adesão e com garantia de conformidade.
+          <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+            Preencha os dados abaixo para receber uma proposta técnica detalhada em até 2 horas
+            úteis. Migração gratuita conduzida por contadores seniores com registro no CRC-SP.
           </p>
         </div>
 
@@ -142,121 +138,122 @@ export function LandingLeadForm({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Direct contact info & Benefits */}
           <div className="lg:col-span-5 space-y-8">
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-white">Por que fechar com a Golden?</h3>
-              <p className="text-slate-300 text-sm leading-relaxed">
-                Você conta com contadores consultivos de verdade, atendimento humanizado e uma
-                plataforma moderna em nuvem com triagem por IA, calendário fiscal sem multas e
-                relatórios em PDF.
+            <div className="space-y-3">
+              <h3 className="text-2xl font-bold text-white">Por que escolher a Golden?</h3>
+              <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
+                Você conta com acompanhamento consultivo de ponta a ponta, sem robôs impessoais nos
+                momentos cruciais, apoiado por uma infraestrutura estável para acompanhamento de
+                vencimentos e documentos fiscais.
               </p>
             </div>
 
             {/* Direct contact cards */}
             <div className="space-y-3.5 pt-2">
-              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg bg-slate-950 border border-slate-800 text-amber-400 flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
-                    E-mail Comercial Direto
+                  <p className="text-xs text-slate-300 font-semibold uppercase tracking-wider">
+                    E-mail Institucional
                   </p>
-                  <p className="font-semibold text-white text-sm">contato@golden.com.br</p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    Notificações automáticas enviadas para paulinho@golden.com.br
+                  <p className="font-semibold text-white text-base">contato@golden.com.br</p>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Notificação direta aos contadores responsáveis
                   </p>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg bg-slate-950 border border-slate-800 text-amber-400 flex items-center justify-center shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
-                    WhatsApp & Telefone
+                  <p className="text-xs text-slate-300 font-semibold uppercase tracking-wider">
+                    Telefone & WhatsApp Corporativo
                   </p>
-                  <p className="font-semibold text-white text-sm">
+                  <p className="font-semibold text-white text-base">
                     (11) 3456-7890 &bull; (11) 98765-4321
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
+                  <p className="text-xs text-slate-300 mt-0.5">
                     Atendimento imediato em dias úteis
                   </p>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg bg-slate-950 border border-slate-800 text-amber-400 flex items-center justify-center shrink-0">
                   <Clock className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
-                    Horário de Atendimento
+                  <p className="text-xs text-slate-300 font-semibold uppercase tracking-wider">
+                    Horário de Expediente
                   </p>
-                  <p className="font-semibold text-white text-sm">
+                  <p className="font-semibold text-white text-base">
                     Segunda a Sexta, das 08h às 18h
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    Portal e Assistente IA ativos 24/7
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Portal em nuvem disponível 24 horas por dia
                   </p>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg bg-slate-950 border border-slate-800 text-amber-400 flex items-center justify-center shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                  <p className="text-xs text-slate-300 font-semibold uppercase tracking-wider">
                     Sede Operacional
                   </p>
-                  <p className="font-semibold text-white text-sm">
+                  <p className="font-semibold text-white text-base">
                     Av. Paulista, 1000 &bull; São Paulo - SP
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    Atendimento presencial com hora marcada ou 100% digital em todo o Brasil
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Atendimento presencial com agendamento ou 100% digital em todo o território
+                    nacional
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Security Guarantee badge */}
-            <div className="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 flex items-center gap-3 text-xs text-slate-300">
-              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 text-xs sm:text-sm text-slate-200">
+              <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0" />
               <span>
-                <strong>Privacidade Blindada:</strong> Seus dados são protegidos conforme a LGPD e
-                utilizados exclusivamente para formulação da proposta técnica.
+                <strong>Privacidade e Sigilo:</strong> Em estrita conformidade com a LGPD e normas
+                do Conselho Federal de Contabilidade.
               </span>
             </div>
           </div>
 
           {/* Right Column: Lead Form Card */}
           <div className="lg:col-span-7">
-            <Card className="border border-slate-800 bg-slate-900/90 shadow-2xl rounded-2xl overflow-hidden backdrop-blur-sm">
+            <Card className="border border-slate-800 bg-slate-900 shadow-xl rounded-xl overflow-hidden">
               <CardContent className="p-6 sm:p-8">
                 {submitted ? (
                   <div className="py-12 text-center space-y-5 animate-fade-in">
-                    <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto shadow-lg">
+                    <div className="w-16 h-16 rounded-xl bg-slate-950 text-amber-400 border border-amber-500/40 flex items-center justify-center mx-auto shadow-md">
                       <CheckCircle2 className="w-8 h-8" />
                     </div>
                     <div className="space-y-2">
                       <h3 className="text-2xl font-bold text-white">
-                        Solicitação de Proposta Recebida!
+                        Solicitação de Proposta Recebida com Sucesso!
                       </h3>
-                      <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                        Nossa equipe contábil (liderada pelo Paulinho) já foi notificada e está
-                        analisando o enquadramento fiscal do seu negócio. Você receberá a proposta
-                        detalhada no e-mail <strong>{formData.email}</strong> e via WhatsApp.
+                      <p className="text-sm sm:text-base text-slate-200 max-w-md mx-auto leading-relaxed">
+                        Nossa equipe técnica (sob supervisão do contador Paulo César) já foi
+                        notificada e está avaliando o enquadramento fiscal do seu negócio. O contato
+                        será realizado no e-mail <strong>{formData.email}</strong> e via WhatsApp.
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 text-xs text-slate-400 max-w-sm mx-auto text-left space-y-1 font-mono">
+                    <div className="p-4 rounded-lg bg-slate-950 border border-slate-800 text-xs sm:text-sm text-slate-300 max-w-sm mx-auto text-left space-y-1.5 font-mono">
                       <p>
-                        <span className="text-slate-500">Regime Selecionado:</span>{' '}
-                        <strong className="text-emerald-400 uppercase">{currentRegime}</strong>
+                        <span className="text-slate-400">Regime Selecionado:</span>{' '}
+                        <strong className="text-amber-300 uppercase">{currentRegime}</strong>
                       </p>
                       <p>
-                        <span className="text-slate-500">Contato:</span> {formData.name}
+                        <span className="text-slate-400">Responsável:</span> {formData.name}
                       </p>
                     </div>
 
@@ -276,13 +273,13 @@ export function LandingLeadForm({
                           })
                         }}
                         variant="outline"
-                        className="bg-slate-800 text-white border-slate-700 text-xs h-10 w-full sm:w-auto"
+                        className="bg-slate-950 hover:bg-slate-800 text-white border-slate-700 text-xs sm:text-sm h-11 w-full sm:w-auto"
                       >
                         Enviar outra mensagem
                       </Button>
                       <Link to="/login" className="w-full sm:w-auto">
-                        <Button className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-10 w-full sm:w-auto gap-2">
-                          <Lock className="w-3.5 h-3.5" />
+                        <Button className="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs sm:text-sm h-11 w-full sm:w-auto gap-2">
+                          <Lock className="w-4 h-4 text-slate-950" />
                           <span>Já sou cliente: Fazer Login</span>
                         </Button>
                       </Link>
@@ -294,14 +291,14 @@ export function LandingLeadForm({
                       <h3 className="text-xl sm:text-2xl font-bold text-white">
                         Solicite sua Proposta Personalizada
                       </h3>
-                      <p className="text-xs text-slate-400 mt-1">
-                        Preencha os dados da sua empresa. Sem taxas de adesão e com resposta rápida.
+                      <p className="text-xs sm:text-sm text-slate-300 mt-1">
+                        Preencha os dados da sua empresa. Retorno rápido sem taxas de adesão.
                       </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold text-slate-300">
+                        <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                           Nome Completo *
                         </Label>
                         <Input
@@ -309,12 +306,12 @@ export function LandingLeadForm({
                           placeholder="Ex: Carlos Silva"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="bg-slate-950 border-slate-800 text-white h-10 text-sm focus-visible:ring-emerald-500"
+                          className="bg-slate-950 border-slate-800 text-white h-11 text-sm focus-visible:ring-amber-500"
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold text-slate-300">
+                        <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                           E-mail Corporativo *
                         </Label>
                         <Input
@@ -323,14 +320,14 @@ export function LandingLeadForm({
                           placeholder="carlos@empresa.com.br"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="bg-slate-950 border-slate-800 text-white h-10 text-sm focus-visible:ring-emerald-500"
+                          className="bg-slate-950 border-slate-800 text-white h-11 text-sm focus-visible:ring-amber-500"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold text-slate-300">
+                        <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                           WhatsApp / Telefone *
                         </Label>
                         <Input
@@ -338,12 +335,12 @@ export function LandingLeadForm({
                           placeholder="(11) 98765-4321"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="bg-slate-950 border-slate-800 text-white h-10 text-sm focus-visible:ring-emerald-500"
+                          className="bg-slate-950 border-slate-800 text-white h-11 text-sm focus-visible:ring-amber-500"
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold text-slate-300">
+                        <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                           Nome da Empresa / Razão Social
                         </Label>
                         <Input
@@ -352,26 +349,26 @@ export function LandingLeadForm({
                           onChange={(e) =>
                             setFormData({ ...formData, company_name: e.target.value })
                           }
-                          className="bg-slate-950 border-slate-800 text-white h-10 text-sm focus-visible:ring-emerald-500"
+                          className="bg-slate-950 border-slate-800 text-white h-11 text-sm focus-visible:ring-amber-500"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold text-slate-300">
+                        <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                           CNPJ (se já constituído)
                         </Label>
                         <Input
                           placeholder="00.000.000/0001-00"
                           value={formData.cnpj}
                           onChange={(e) => setFormData({ ...formData, cnpj: e.target.value })}
-                          className="bg-slate-950 border-slate-800 text-white h-10 text-sm font-mono focus-visible:ring-emerald-500"
+                          className="bg-slate-950 border-slate-800 text-white h-11 text-sm font-mono focus-visible:ring-amber-500"
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold text-slate-300">
+                        <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                           Regime Tributário de Interesse
                         </Label>
                         <Select
@@ -381,22 +378,22 @@ export function LandingLeadForm({
                             if (onRegimeChange) onRegimeChange(v)
                           }}
                         >
-                          <SelectTrigger className="bg-slate-950 border-slate-800 text-white h-10 text-xs focus-visible:ring-emerald-500">
+                          <SelectTrigger className="bg-slate-950 border-slate-800 text-white h-11 text-xs sm:text-sm focus-visible:ring-amber-500">
                             <SelectValue placeholder="Selecione o regime" />
                           </SelectTrigger>
                           <SelectContent className="bg-slate-900 border-slate-800 text-white">
                             <SelectItem value="simples">
-                              Simples Nacional (a partir de R$ 149/mês)
+                              Simples Nacional (desde R$ 149/mês)
                             </SelectItem>
                             <SelectItem value="presumido">
-                              Lucro Presumido (a partir de R$ 249/mês)
+                              Lucro Presumido (desde R$ 249/mês)
                             </SelectItem>
                             <SelectItem value="real">
                               Lucro Real / Corporativo (Sob Medida)
                             </SelectItem>
-                            <SelectItem value="mei">MEI (Microempreendedor)</SelectItem>
+                            <SelectItem value="mei">MEI (Microempreendedor Individual)</SelectItem>
                             <SelectItem value="nao_sei">
-                              Não sei ainda / Quero diagnóstico gratuito
+                              Não sei ainda / Solicitar diagnóstico gratuito
                             </SelectItem>
                           </SelectContent>
                         </Select>
@@ -405,18 +402,18 @@ export function LandingLeadForm({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold text-slate-300">
+                        <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                           Número de Sócios / Funcionários
                         </Label>
                         <Select
                           value={formData.employees_count}
                           onValueChange={(v) => setFormData({ ...formData, employees_count: v })}
                         >
-                          <SelectTrigger className="bg-slate-950 border-slate-800 text-white h-10 text-xs focus-visible:ring-emerald-500">
+                          <SelectTrigger className="bg-slate-950 border-slate-800 text-white h-11 text-xs sm:text-sm focus-visible:ring-amber-500">
                             <SelectValue placeholder="Selecione a faixa" />
                           </SelectTrigger>
                           <SelectContent className="bg-slate-900 border-slate-800 text-white">
-                            <SelectItem value="0">Apenas sócios (Sem colaboradores)</SelectItem>
+                            <SelectItem value="0">Apenas sócios (Sem colaboradores CLT)</SelectItem>
                             <SelectItem value="1-5">1 a 5 colaboradores</SelectItem>
                             <SelectItem value="6-15">6 a 15 colaboradores</SelectItem>
                             <SelectItem value="16-50">16 a 50 colaboradores</SelectItem>
@@ -426,11 +423,11 @@ export function LandingLeadForm({
                       </div>
 
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold text-slate-300">
+                        <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                           Objetivo Principal
                         </Label>
                         <Select defaultValue="migrar">
-                          <SelectTrigger className="bg-slate-950 border-slate-800 text-white h-10 text-xs focus-visible:ring-emerald-500">
+                          <SelectTrigger className="bg-slate-950 border-slate-800 text-white h-11 text-xs sm:text-sm focus-visible:ring-amber-500">
                             <SelectValue placeholder="Selecione o objetivo" />
                           </SelectTrigger>
                           <SelectContent className="bg-slate-900 border-slate-800 text-white">
@@ -452,38 +449,38 @@ export function LandingLeadForm({
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label className="text-xs font-semibold text-slate-300">
+                      <Label className="text-xs sm:text-sm font-semibold text-slate-200">
                         Mensagem ou Particularidades da Empresa
                       </Label>
                       <Textarea
                         rows={3}
-                        placeholder="Ex: Faturamento médio mensal, volume de notas fiscais, atividades exercidas ou necessidades de integração..."
+                        placeholder="Ex: Faturamento médio mensal, volume de notas fiscais emitidas, segmento de atuação..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="bg-slate-950 border-slate-800 text-white text-xs resize-none focus-visible:ring-emerald-500"
+                        className="bg-slate-950 border-slate-800 text-white text-xs sm:text-sm resize-none focus-visible:ring-amber-500"
                       />
                     </div>
 
                     <Button
                       type="submit"
                       disabled={loading}
-                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-12 text-sm sm:text-base shadow-lg shadow-emerald-600/30 gap-2 mt-2"
+                      className="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold h-12 text-sm sm:text-base shadow-md shadow-amber-950/40 gap-2 mt-2 transition-all"
                     >
                       {loading ? (
                         <>
-                          <Loader2 className="w-5 h-5 animate-spin" />
-                          <span>Processando e enviando proposta...</span>
+                          <Loader2 className="w-5 h-5 animate-spin text-slate-950" />
+                          <span>Processando proposta...</span>
                         </>
                       ) : (
                         <>
-                          <Send className="w-5 h-5" />
-                          <span>Solicitar Proposta & Falar com Contador</span>
+                          <Send className="w-5 h-5 text-slate-950" />
+                          <span>Solicitar Proposta & Falar com Contador Sênior</span>
                         </>
                       )}
                     </Button>
 
-                    <div className="pt-1 flex items-center justify-center gap-2 text-[11px] text-slate-500">
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                    <div className="pt-1 flex items-center justify-center gap-2 text-xs text-slate-400">
+                      <ShieldCheck className="w-4 h-4 text-amber-400" />
                       <span>Sem custo &bull; Resposta em até 2h úteis &bull; LGPD Compliant</span>
                     </div>
                   </form>
