@@ -44,35 +44,35 @@ export function LandingFaq() {
   ]
 
   return (
-    <section id="faq" className="py-24 bg-slate-950 border-b border-slate-800">
+    <section id="faq" className="py-24 bg-[#faf8f5] border-b border-stone-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-4">
-          <Badge className="bg-slate-900 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
-            <HelpCircle className="w-3.5 h-3.5 mr-1 text-amber-400 inline" />
+          <Badge className="bg-white text-amber-900 border-amber-600/30 text-xs font-semibold px-3 py-1">
+            <HelpCircle className="w-3.5 h-3.5 mr-1 text-amber-700 inline" />
             Dúvidas Frequentes
           </Badge>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-950 tracking-tight">
             Perguntas Frequentes
           </h2>
-          <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
             Respostas claras e transparentes sobre metodologia, transição, planos e suporte da
             Golden Contabilidade.
           </p>
         </div>
 
         {/* Functional Accordion com estilo sóbrio */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/90 p-4 sm:p-6 shadow-sm">
+        <div className="rounded-2xl border border-stone-200 bg-white p-4 sm:p-6 shadow-xs">
           <Accordion type="single" collapsible className="w-full space-y-3">
             {faqs.map((faq, i) => (
               <AccordionItem
                 key={i}
                 value={`faq-${i}`}
-                className="border border-slate-800 rounded-lg px-4 py-1 data-[state=open]:border-slate-700 data-[state=open]:bg-slate-950/70 transition-all"
+                className="border border-stone-200 rounded-xl px-4 py-1 data-[state=open]:border-amber-400/60 data-[state=open]:bg-[#faf8f5] transition-all"
               >
-                <AccordionTrigger className="text-left font-bold text-white text-base sm:text-lg hover:text-amber-300 hover:no-underline py-4">
+                <AccordionTrigger className="text-left font-bold text-slate-950 text-base sm:text-lg hover:text-amber-800 hover:no-underline py-4">
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-slate-200 text-sm sm:text-base leading-relaxed pb-4 pt-1 border-t border-slate-800 mt-1">
+                <AccordionContent className="text-slate-700 text-sm sm:text-base leading-relaxed pb-4 pt-1 border-t border-stone-200/80 mt-1">
                   {faq.a}
                 </AccordionContent>
               </AccordionItem>
@@ -81,11 +81,11 @@ export function LandingFaq() {
         </div>
 
         {/* Still have questions */}
-        <div className="text-center pt-2 text-sm text-slate-300">
+        <div className="text-center pt-2 text-sm text-slate-700">
           Precisa de uma orientação específica para o seu negócio?{' '}
           <a
             href="#contratar"
-            className="text-amber-300 hover:text-amber-200 font-bold underline ml-1"
+            className="text-amber-800 hover:text-amber-900 font-bold underline ml-1"
           >
             Fale diretamente com um de nossos contadores seniores &rarr;
           </a>

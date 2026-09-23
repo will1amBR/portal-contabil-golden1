@@ -17,12 +17,12 @@ export function LandingFooter() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-slate-950 border-t border-slate-850 text-slate-300 text-xs sm:text-sm selection:bg-amber-700 selection:text-white">
+    <footer className="bg-slate-950 border-t border-stone-300 text-slate-300 text-xs sm:text-sm selection:bg-amber-500/30 selection:text-white">
       {/* Top Banner inside Footer */}
-      <div className="border-b border-slate-800/80 py-10 bg-slate-900/60">
+      <div className="border-b border-slate-800/80 py-10 bg-slate-900/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 text-center md:text-left">
-            <div className="w-12 h-12 rounded-lg bg-slate-950 border border-slate-800 text-amber-400 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-slate-950 border border-slate-800 text-amber-400 flex items-center justify-center shrink-0">
               <Building2 className="w-6 h-6" />
             </div>
             <div>
@@ -37,14 +37,14 @@ export function LandingFooter() {
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link to="/login">
-              <span className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs sm:text-sm font-semibold cursor-pointer transition-colors">
+              <span className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-100 text-xs sm:text-sm font-semibold cursor-pointer transition-colors">
                 <Lock className="w-4 h-4 text-amber-400" />
                 <span>Área do Cliente (Login)</span>
               </span>
             </Link>
 
             <Link to="/contratar">
-              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-950 text-xs sm:text-sm font-bold cursor-pointer transition-colors shadow-sm">
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold cursor-pointer transition-colors shadow-xs">
                 <span>Solicitar Proposta</span>
                 <ArrowRight className="w-4 h-4" />
               </span>

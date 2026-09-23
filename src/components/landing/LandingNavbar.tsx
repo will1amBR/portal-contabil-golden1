@@ -29,36 +29,36 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
     <header
       className={`sticky top-0 z-50 transition-all duration-200 ${
         scrolled
-          ? 'bg-slate-950/95 backdrop-blur-md border-b border-slate-800/90 shadow-xl'
-          : 'bg-slate-950/90 backdrop-blur-sm border-b border-slate-800/70'
+          ? 'bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm'
+          : 'bg-white/90 backdrop-blur-sm border-b border-stone-200'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-3.5 group">
-          <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-md shadow-amber-950/40 ring-1 ring-amber-400/30 group-hover:ring-amber-400/60 transition-all">
-            <Building2 className="w-6 h-6 text-amber-100" />
+          <div className="w-11 h-11 rounded-xl bg-amber-100 border border-amber-300 flex items-center justify-center shadow-2xs group-hover:border-amber-400 transition-all">
+            <Building2 className="w-6 h-6 text-amber-800" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-lg sm:text-xl tracking-tight text-white block group-hover:text-amber-200 transition-colors">
+              <span className="font-bold text-lg sm:text-xl tracking-tight text-slate-950 block group-hover:text-amber-800 transition-colors">
                 Golden Contabilidade
               </span>
             </div>
-            <span className="text-[11px] text-amber-300/80 font-medium tracking-wide uppercase block">
+            <span className="text-[11px] text-amber-800 font-semibold tracking-wide uppercase block">
               Portal Contábil Integrado &bull; CRC-SP
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-200">
+        <nav className="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-700">
           <Link
             to="/"
             className={`transition-colors py-1 ${
               location.pathname === '/'
-                ? 'text-amber-300 font-semibold border-b-2 border-amber-400'
-                : 'hover:text-amber-200'
+                ? 'text-amber-800 font-bold border-b-2 border-amber-600'
+                : 'hover:text-slate-950'
             }`}
           >
             Home
@@ -67,8 +67,8 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
             to="/institucional"
             className={`transition-colors py-1 ${
               location.pathname === '/institucional'
-                ? 'text-amber-300 font-semibold border-b-2 border-amber-400'
-                : 'hover:text-amber-200'
+                ? 'text-amber-800 font-bold border-b-2 border-amber-600'
+                : 'hover:text-slate-950'
             }`}
           >
             Institucional
@@ -77,30 +77,30 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
             to="/planos"
             className={`transition-colors py-1 flex items-center gap-1.5 ${
               location.pathname === '/planos'
-                ? 'text-amber-300 font-semibold border-b-2 border-amber-400'
-                : 'hover:text-amber-200'
+                ? 'text-amber-800 font-bold border-b-2 border-amber-600'
+                : 'hover:text-slate-950'
             }`}
           >
             <span>Planos & Preços</span>
-            <span className="bg-amber-500/15 text-amber-200 border border-amber-400/30 text-[10px] font-semibold px-2 py-0.5 rounded">
+            <span className="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full">
               Tabela
             </span>
           </Link>
           <Link
             to="/institucional#funcionalidades"
-            className="hover:text-amber-200 transition-colors"
+            className="hover:text-slate-950 transition-colors"
           >
             Funcionalidades
           </Link>
-          <Link to="/institucional#faq" className="hover:text-amber-200 transition-colors">
+          <Link to="/institucional#faq" className="hover:text-slate-950 transition-colors">
             FAQ
           </Link>
           <Link
             to="/contratar"
             className={`transition-colors py-1 ${
               location.pathname === '/contratar'
-                ? 'text-amber-300 font-semibold border-b-2 border-amber-400'
-                : 'hover:text-amber-200'
+                ? 'text-amber-800 font-bold border-b-2 border-amber-600'
+                : 'hover:text-slate-950'
             }`}
           >
             Contratar
@@ -112,9 +112,9 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
           <Link to="/login">
             <Button
               variant="outline"
-              className="bg-slate-900/90 hover:bg-slate-850 hover:text-white text-slate-200 border-slate-700 text-xs sm:text-sm font-semibold h-10 px-4 gap-1.5 shadow-sm"
+              className="bg-white hover:bg-stone-50 text-slate-900 border-stone-300 text-xs sm:text-sm font-semibold h-10 px-4 gap-1.5 shadow-2xs"
             >
-              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <Lock className="w-3.5 h-3.5 text-amber-700" />
               <span>Área do Cliente</span>
             </Button>
           </Link>
@@ -122,10 +122,10 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
           <Link to="/contratar">
             <Button
               onClick={() => onSelectPlanCta && onSelectPlanCta('simples')}
-              className="bg-amber-600 hover:bg-amber-500 text-slate-950 text-xs sm:text-sm font-bold h-10 px-4.5 shadow-md shadow-amber-950/30 gap-2 transition-all"
+              className="bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold h-10 px-4.5 shadow-xs gap-2 transition-all"
             >
               <span>Solicitar Proposta</span>
-              <ArrowRight className="w-4 h-4 text-slate-950" />
+              <ArrowRight className="w-4 h-4 text-white" />
             </Button>
           </Link>
         </div>
@@ -136,15 +136,15 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
             <Button
               size="sm"
               variant="outline"
-              className="bg-slate-900 text-slate-200 border-slate-700 text-xs font-semibold h-9 px-3"
+              className="bg-white text-slate-900 border-stone-300 text-xs font-semibold h-9 px-3"
             >
-              <Lock className="w-3.5 h-3.5 mr-1 text-amber-400" /> Login
+              <Lock className="w-3.5 h-3.5 mr-1 text-amber-700" /> Login
             </Button>
           </Link>
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:text-white"
+            className="p-2 rounded-xl bg-white border border-stone-300 text-slate-800 hover:text-slate-950"
             aria-label="Abrir menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -154,15 +154,15 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-slate-800 bg-slate-950 px-4 pt-3 pb-6 space-y-4 animate-fade-in">
-          <nav className="flex flex-col space-y-2 text-sm font-medium text-slate-200">
+        <div className="lg:hidden border-b border-stone-200 bg-white px-4 pt-3 pb-6 space-y-4 animate-fade-in shadow-lg">
+          <nav className="flex flex-col space-y-2 text-sm font-medium text-slate-700">
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
               className={`p-2.5 rounded-lg ${
                 location.pathname === '/'
-                  ? 'bg-slate-900 text-amber-300 font-bold'
-                  : 'hover:bg-slate-900 hover:text-amber-200'
+                  ? 'bg-amber-50 text-amber-900 font-bold'
+                  : 'hover:bg-stone-100 hover:text-slate-950'
               }`}
             >
               Home (A Golden)
@@ -172,8 +172,8 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className={`p-2.5 rounded-lg ${
                 location.pathname === '/institucional'
-                  ? 'bg-slate-900 text-amber-300 font-bold'
-                  : 'hover:bg-slate-900 hover:text-amber-200'
+                  ? 'bg-amber-50 text-amber-900 font-bold'
+                  : 'hover:bg-stone-100 hover:text-slate-950'
               }`}
             >
               Institucional (Portal & Soluções)
@@ -183,26 +183,26 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className={`p-2.5 rounded-lg flex items-center justify-between ${
                 location.pathname === '/planos'
-                  ? 'bg-slate-900 text-amber-300 font-bold'
-                  : 'hover:bg-slate-900 hover:text-amber-200'
+                  ? 'bg-amber-50 text-amber-900 font-bold'
+                  : 'hover:bg-stone-100 hover:text-slate-950'
               }`}
             >
               <span>Planos & Tabela Comparativa</span>
-              <span className="bg-amber-500/15 text-amber-200 text-[10px] px-2 py-0.5 rounded font-bold border border-amber-400/30">
+              <span className="bg-amber-100 text-amber-900 text-[10px] px-2 py-0.5 rounded-full font-bold border border-amber-300">
                 Tabela
               </span>
             </Link>
             <Link
               to="/institucional#funcionalidades"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-lg hover:bg-slate-900 hover:text-amber-200"
+              className="p-2.5 rounded-lg hover:bg-stone-100 hover:text-slate-950"
             >
               Funções Entregues do Portal
             </Link>
             <Link
               to="/institucional#faq"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-lg hover:bg-slate-900 hover:text-amber-200"
+              className="p-2.5 rounded-lg hover:bg-stone-100 hover:text-slate-950"
             >
               Perguntas Frequentes (FAQ)
             </Link>
@@ -211,15 +211,15 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className={`p-2.5 rounded-lg font-bold ${
                 location.pathname === '/contratar'
-                  ? 'bg-amber-500/20 text-amber-200'
-                  : 'hover:bg-slate-900 text-amber-300'
+                  ? 'bg-amber-100 text-amber-900'
+                  : 'hover:bg-stone-100 text-amber-800'
               }`}
             >
               Contratar / Solicitar Proposta
             </Link>
           </nav>
 
-          <div className="pt-2 border-t border-slate-800 flex flex-col gap-2">
+          <div className="pt-2 border-t border-stone-200 flex flex-col gap-2">
             <Link
               to="/contratar"
               onClick={() => {
@@ -227,14 +227,14 @@ export function LandingNavbar({ onSelectPlanCta }: LandingNavbarProps) {
                 if (onSelectPlanCta) onSelectPlanCta('simples')
               }}
             >
-              <Button className="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold h-11 text-sm shadow-md">
+              <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold h-11 text-sm shadow-xs">
                 Solicitar Proposta Agora &rarr;
               </Button>
             </Link>
             <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
               <Button
                 variant="outline"
-                className="w-full bg-slate-900 text-slate-200 border-slate-700 text-xs h-10"
+                className="w-full bg-white text-slate-800 border-stone-300 text-xs h-10 shadow-2xs"
               >
                 Acessar Área do Cliente (Login)
               </Button>

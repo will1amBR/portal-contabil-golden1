@@ -157,34 +157,36 @@ export default function PublicHome() {
   ]
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-amber-700 selection:text-white">
+    <div className="min-h-screen bg-[#faf8f5] text-slate-900 font-sans selection:bg-amber-500/30 selection:text-slate-950">
       {/* 1. Navbar Pública Consistente */}
       <LandingNavbar onSelectPlanCta={handleSelectPlan} />
 
       <main>
         {/* 2. Hero Institucional Golden - Sólido e Elegante */}
-        <section className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden bg-slate-950 border-b border-slate-800">
+        <section className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden bg-gradient-to-b from-white via-[#faf8f5] to-[#f4efe8] border-b border-stone-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-4xl mx-auto space-y-7">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-md bg-slate-900 border border-amber-500/30 text-amber-200 text-xs sm:text-sm font-semibold shadow-sm">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Golden Contabilidade &bull; Portal Contábil Integrado</span>
-                <span className="hidden sm:inline text-slate-500">&bull;</span>
-                <span className="hidden sm:inline text-slate-200 font-medium">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-amber-600/30 text-amber-900 text-xs sm:text-sm font-semibold shadow-xs">
+                <Sparkles className="w-4 h-4 text-amber-700" />
+                <span className="text-slate-900">
+                  Golden Contabilidade &bull; Portal Contábil Integrado
+                </span>
+                <span className="hidden sm:inline text-stone-400">&bull;</span>
+                <span className="hidden sm:inline text-amber-800 font-semibold">
                   CRC-SP 2SP034891/O
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-white leading-[1.18]">
+              <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-slate-950 leading-[1.18]">
                 A contabilidade que une a solidez da tradição à eficiência da tecnologia
                 contemporânea.
               </h1>
 
-              <p className="text-base sm:text-lg lg:text-xl text-slate-200 leading-relaxed max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg lg:text-xl text-slate-700 leading-relaxed max-w-3xl mx-auto">
                 Fundada para proporcionar segurança fiscal contínua aos empresários, a{' '}
-                <strong>Golden Contabilidade</strong> oferece atendimento consultivo de alto nível,
-                acompanhamento preventivo de prazos, triagem de notas fiscais e relatórios
-                gerenciais claros.
+                <strong className="text-slate-950">Golden Contabilidade</strong> oferece atendimento
+                consultivo de alto nível, acompanhamento preventivo de prazos, triagem de notas
+                fiscais e relatórios gerenciais claros.
               </p>
 
               {/* Action Buttons */}
@@ -192,10 +194,10 @@ export default function PublicHome() {
                 <Link to="/planos" className="w-full sm:w-auto">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-7 h-12 shadow-md shadow-amber-950/40 gap-2 text-base transition-all"
+                    className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 text-white font-bold px-7 h-12 shadow-sm gap-2 text-base transition-all"
                   >
                     <span>Conhecer Planos & Tabela</span>
-                    <ArrowRight className="w-5 h-5 text-slate-950" />
+                    <ArrowRight className="w-5 h-5 text-white" />
                   </Button>
                 </Link>
 
@@ -203,9 +205,9 @@ export default function PublicHome() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-slate-100 border-slate-700 px-6 h-12 text-sm sm:text-base font-semibold gap-2"
+                    className="w-full sm:w-auto bg-white hover:bg-stone-50 text-slate-900 border-stone-300 px-6 h-12 text-sm sm:text-base font-semibold gap-2 shadow-xs"
                   >
-                    <FileText className="w-4 h-4 text-amber-400" />
+                    <FileText className="w-4 h-4 text-amber-700" />
                     <span>Solicitar Proposta Comercial</span>
                   </Button>
                 </Link>
@@ -214,33 +216,35 @@ export default function PublicHome() {
                   <Button
                     size="lg"
                     variant="ghost"
-                    className="w-full sm:w-auto text-slate-300 hover:text-white hover:bg-slate-900 border border-slate-800 px-5 h-12 text-sm sm:text-base font-semibold gap-2"
+                    className="w-full sm:w-auto text-slate-700 hover:text-slate-950 hover:bg-stone-100 border border-stone-300 px-5 h-12 text-sm sm:text-base font-semibold gap-2"
                   >
-                    <Lock className="w-4 h-4 text-amber-400" />
+                    <Lock className="w-4 h-4 text-amber-700" />
                     <span>Área do Cliente</span>
                   </Button>
                 </Link>
               </div>
 
               {/* Trust Badges */}
-              <div className="pt-6 flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs sm:text-sm text-slate-300 border-t border-slate-800 mt-8">
+              <div className="pt-6 flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs sm:text-sm text-slate-700 border-t border-stone-200 mt-8">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-amber-400" />
-                  <span className="text-slate-200 font-medium">Registro Ativo no CRC-SP</span>
+                  <ShieldCheck className="w-4 h-4 text-amber-700" />
+                  <span className="font-semibold text-slate-900">Registro Ativo no CRC-SP</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400" />
-                  <span className="text-slate-200 font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span className="font-semibold text-slate-900">
                     Migração Sem Custo e Sem Paradas
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-amber-400" />
-                  <span className="text-slate-200 font-medium">Retorno Ágil em até 15 Minutos</span>
+                  <Clock className="w-4 h-4 text-amber-700" />
+                  <span className="font-semibold text-slate-900">
+                    Retorno Ágil em até 15 Minutos
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-amber-400" />
-                  <span className="text-slate-200 font-medium">
+                  <Lock className="w-4 h-4 text-slate-800" />
+                  <span className="font-semibold text-slate-900">
                     Conformidade Rigorosa com a LGPD
                   </span>
                 </div>
@@ -253,21 +257,21 @@ export default function PublicHome() {
         <LandingSocialProof />
 
         {/* 4. Quem Somos & Missão */}
-        <section className="py-24 bg-slate-900 border-b border-slate-800 relative">
+        <section className="py-24 bg-white border-b border-stone-200 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               {/* Left Column: Story & Mission */}
               <div className="lg:col-span-7 space-y-6">
-                <Badge className="bg-slate-950 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
-                  <Building2 className="w-3.5 h-3.5 mr-1 text-amber-400 inline" />
+                <Badge className="bg-stone-100 text-amber-900 border-amber-600/30 text-xs font-semibold px-3 py-1">
+                  <Building2 className="w-3.5 h-3.5 mr-1 text-amber-700 inline" />
                   Quem Somos &bull; Golden Contabilidade
                 </Badge>
 
-                <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 tracking-tight leading-tight">
                   Mais do que emitir guias: somos o parceiro estratégico do seu patrimônio.
                 </h2>
 
-                <div className="space-y-4 text-slate-200 text-base leading-relaxed">
+                <div className="space-y-4 text-slate-700 text-base leading-relaxed">
                   <p>
                     A Golden Contabilidade nasceu da percepção clara de uma lacuna no mercado: de um
                     lado, escritórios excessivamente burocráticos e lentos; de outro, plataformas
@@ -284,31 +288,31 @@ export default function PublicHome() {
 
                 {/* 3 Pillars: Mission, Vision, Values */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                  <div className="p-4 rounded-lg bg-slate-950 border border-slate-800 space-y-2">
-                    <span className="text-xs font-bold text-amber-300 uppercase tracking-wider block">
+                  <div className="p-4 rounded-xl bg-[#faf8f5] border border-stone-200 space-y-2">
+                    <span className="text-xs font-bold text-amber-800 uppercase tracking-wider block">
                       Missão
                     </span>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                       Proteger empresas contra passivos fiscais e trabalhistas, proporcionando
                       clareza contábil e economia tributária lícita.
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-slate-950 border border-slate-800 space-y-2">
-                    <span className="text-xs font-bold text-amber-300 uppercase tracking-wider block">
+                  <div className="p-4 rounded-xl bg-[#faf8f5] border border-stone-200 space-y-2">
+                    <span className="text-xs font-bold text-amber-800 uppercase tracking-wider block">
                       Visão
                     </span>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                       Ser a principal referência em contabilidade consultiva e confiável do país,
                       unindo a responsabilidade do CRC à tecnologia moderna.
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-slate-950 border border-slate-800 space-y-2">
-                    <span className="text-xs font-bold text-amber-300 uppercase tracking-wider block">
+                  <div className="p-4 rounded-xl bg-[#faf8f5] border border-stone-200 space-y-2">
+                    <span className="text-xs font-bold text-amber-800 uppercase tracking-wider block">
                       Valores
                     </span>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                       Transparência, rigor técnico irrestrito, integridade de dados e pontualidade
                       absoluta em cada entrega fiscal.
                     </p>
@@ -318,59 +322,59 @@ export default function PublicHome() {
 
               {/* Right Column: Visual highlights card */}
               <div className="lg:col-span-5">
-                <div className="relative rounded-xl bg-slate-950 p-8 border border-slate-800 shadow-xl space-y-6">
-                  <div className="w-12 h-12 rounded-lg bg-slate-900 text-amber-400 border border-slate-800 flex items-center justify-center">
-                    <Award className="w-6 h-6" />
+                <div className="relative rounded-2xl bg-[#faf8f5] p-8 border border-stone-200 shadow-md space-y-6">
+                  <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 border border-amber-300 flex items-center justify-center">
+                    <Award className="w-6 h-6 text-amber-700" />
                   </div>
 
                   <div>
-                    <h3 className="text-2xl font-bold text-white">Indicadores Auditados</h3>
-                    <p className="text-xs sm:text-sm text-slate-300 mt-1">
+                    <h3 className="text-2xl font-bold text-slate-950">Indicadores Auditados</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 mt-1">
                       Resultados comprovados em nossa operação corporativa
                     </p>
                   </div>
 
                   <div className="space-y-3.5 pt-2">
-                    <div className="flex items-center justify-between p-3.5 rounded-lg bg-slate-900 border border-slate-800">
+                    <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-stone-200">
                       <div>
-                        <p className="text-2xl font-bold text-white font-mono">+120</p>
-                        <p className="text-xs text-slate-300">Empresas ativas e auditadas</p>
+                        <p className="text-2xl font-bold text-slate-950 font-mono">+120</p>
+                        <p className="text-xs text-slate-600">Empresas ativas e auditadas</p>
                       </div>
-                      <Badge className="bg-slate-950 text-slate-200 border-slate-700 text-xs">
+                      <Badge className="bg-stone-100 text-slate-800 border-stone-300 text-xs font-medium">
                         Simples / Presumido / Real
                       </Badge>
                     </div>
 
-                    <div className="flex items-center justify-between p-3.5 rounded-lg bg-slate-900 border border-slate-800">
+                    <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-stone-200">
                       <div>
-                        <p className="text-2xl font-bold text-white font-mono">100%</p>
-                        <p className="text-xs text-slate-300">
+                        <p className="text-2xl font-bold text-emerald-700 font-mono">100%</p>
+                        <p className="text-xs text-slate-600">
                           Prazos fiscais cumpridos sem multas
                         </p>
                       </div>
-                      <Badge className="bg-slate-900 text-slate-100 border-slate-700 text-xs font-semibold">
+                      <Badge className="bg-emerald-50 text-emerald-800 border-emerald-300 text-xs font-semibold">
                         Conformidade 100%
                       </Badge>
                     </div>
 
-                    <div className="flex items-center justify-between p-3.5 rounded-lg bg-slate-900 border border-slate-800">
+                    <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-stone-200">
                       <div>
-                        <p className="text-2xl font-bold text-white font-mono">&lt; 15 min</p>
-                        <p className="text-xs text-slate-300">Tempo médio de retorno humano</p>
+                        <p className="text-2xl font-bold text-slate-950 font-mono">&lt; 15 min</p>
+                        <p className="text-xs text-slate-600">Tempo médio de retorno humano</p>
                       </div>
-                      <Badge className="bg-amber-950/80 text-amber-300 border-amber-700 text-xs">
+                      <Badge className="bg-amber-100 text-amber-900 border-amber-300 text-xs font-semibold">
                         SLA Ágil
                       </Badge>
                     </div>
 
-                    <div className="flex items-center justify-between p-3.5 rounded-lg bg-slate-900 border border-slate-800">
+                    <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-stone-200">
                       <div>
-                        <p className="text-2xl font-bold text-white font-mono">R$ 0</p>
-                        <p className="text-xs text-slate-300">
+                        <p className="text-2xl font-bold text-slate-950 font-mono">R$ 0</p>
+                        <p className="text-xs text-slate-600">
                           Taxa de migração ou adesão de contrato
                         </p>
                       </div>
-                      <Badge className="bg-slate-950 text-slate-200 border-slate-700 text-xs">
+                      <Badge className="bg-stone-100 text-slate-800 border-stone-300 text-xs font-medium">
                         Sem Custo
                       </Badge>
                     </div>
@@ -378,7 +382,7 @@ export default function PublicHome() {
 
                   <div className="pt-2">
                     <Link to="/institucional#funcionalidades">
-                      <Button className="w-full bg-slate-900 hover:bg-slate-850 text-white border border-slate-700 text-xs sm:text-sm h-11 gap-2">
+                      <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm h-11 gap-2 shadow-xs">
                         <span>Ver Funcionalidades do Portal</span>
                         <ChevronRight className="w-4 h-4 text-amber-400" />
                       </Button>
@@ -391,17 +395,17 @@ export default function PublicHome() {
         </section>
 
         {/* 5. Nossos 6 Diferenciais Competitivos */}
-        <section className="py-24 bg-slate-950 border-b border-slate-800">
+        <section className="py-24 bg-[#faf8f5] border-b border-stone-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             <div className="text-center space-y-4 max-w-3xl mx-auto">
-              <Badge className="bg-slate-900 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
-                <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-400 inline" />
+              <Badge className="bg-white text-amber-900 border-amber-600/30 text-xs font-semibold px-3 py-1">
+                <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-700 inline" />
                 Diferenciais da Golden
               </Badge>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-950 tracking-tight">
                 Por que as empresas escolhem a Golden?
               </h2>
-              <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
                 Aliamos processos digitais seguros a contadores seniores comprometidos com a saúde
                 financeira e tributária do seu negócio.
               </p>
@@ -413,21 +417,21 @@ export default function PublicHome() {
                 return (
                   <Card
                     key={idx}
-                    className="border border-slate-800 bg-slate-900/90 hover:border-slate-700 transition-all rounded-xl shadow-sm flex flex-col justify-between"
+                    className="border border-stone-200 bg-white hover:border-amber-400/60 hover:shadow-md transition-all rounded-xl shadow-xs flex flex-col justify-between"
                   >
                     <CardContent className="p-7 space-y-4">
                       <div className="flex items-center justify-between">
-                        <div className="w-11 h-11 rounded-lg bg-slate-950 border border-slate-800 text-amber-400 flex items-center justify-center">
-                          <IconComponent className="w-5 h-5" />
+                        <div className="w-11 h-11 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-center">
+                          <IconComponent className="w-5 h-5 text-amber-700" />
                         </div>
-                        <Badge className="bg-slate-950 text-slate-200 border-slate-800 text-[11px]">
+                        <Badge className="bg-stone-100 text-slate-700 border-stone-200 text-[11px] font-medium">
                           {item.badge}
                         </Badge>
                       </div>
 
                       <div className="space-y-1.5">
-                        <h3 className="text-lg font-bold text-white">{item.title}</h3>
-                        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                        <h3 className="text-lg font-bold text-slate-950">{item.title}</h3>
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                           {item.desc}
                         </p>
                       </div>
@@ -440,17 +444,17 @@ export default function PublicHome() {
         </section>
 
         {/* 6. Serviços Oferecidos em Detalhes */}
-        <section className="py-24 bg-slate-900 border-b border-slate-800">
+        <section className="py-24 bg-white border-b border-stone-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             <div className="text-center space-y-4 max-w-3xl mx-auto">
-              <Badge className="bg-slate-950 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
-                <Briefcase className="w-3.5 h-3.5 mr-1 text-amber-400 inline" />
+              <Badge className="bg-[#faf8f5] text-amber-900 border-amber-600/30 text-xs font-semibold px-3 py-1">
+                <Briefcase className="w-3.5 h-3.5 mr-1 text-amber-700 inline" />
                 Soluções Completas
               </Badge>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-950 tracking-tight">
                 Serviços contábeis desenhados para cada fase do seu negócio
               </h2>
-              <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
                 Da abertura do CNPJ à apuração fiscal de médias e grandes operações.
               </p>
             </div>
@@ -461,33 +465,33 @@ export default function PublicHome() {
                 return (
                   <Card
                     key={idx}
-                    className="border border-slate-800 bg-slate-950 hover:border-slate-700 transition-all rounded-xl flex flex-col justify-between shadow-sm"
+                    className="border border-stone-200 bg-[#faf8f5] hover:border-amber-400/60 hover:shadow-md transition-all rounded-xl flex flex-col justify-between shadow-xs"
                   >
                     <CardContent className="p-8 space-y-6">
                       <div className="flex items-center justify-between">
-                        <div className="w-12 h-12 rounded-lg bg-slate-900 text-amber-400 border border-slate-800 flex items-center justify-center">
-                          <IconComponent className="w-6 h-6" />
+                        <div className="w-12 h-12 rounded-xl bg-white text-amber-800 border border-stone-200 flex items-center justify-center shadow-xs">
+                          <IconComponent className="w-6 h-6 text-amber-700" />
                         </div>
-                        <span className="text-xs sm:text-sm font-semibold text-amber-300 font-mono">
+                        <span className="text-xs sm:text-sm font-bold text-amber-800 font-mono">
                           {srv.priceHint}
                         </span>
                       </div>
 
                       <div className="space-y-2">
-                        <h3 className="text-xl font-bold text-white">{srv.title}</h3>
-                        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                        <h3 className="text-xl font-bold text-slate-950">{srv.title}</h3>
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                           {srv.summary}
                         </p>
                       </div>
 
-                      <div className="space-y-2.5 pt-3 border-t border-slate-800">
-                        <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                      <div className="space-y-2.5 pt-3 border-t border-stone-200">
+                        <p className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                           O que está incluso:
                         </p>
-                        <ul className="space-y-2 text-xs sm:text-sm text-slate-200">
+                        <ul className="space-y-2 text-xs sm:text-sm text-slate-700">
                           {srv.items.map((it, i) => (
                             <li key={i} className="flex items-start gap-2.5">
-                              <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                               <span>{it}</span>
                             </li>
                           ))}
@@ -495,17 +499,17 @@ export default function PublicHome() {
                       </div>
                     </CardContent>
 
-                    <div className="p-6 pt-0 flex items-center justify-between border-t border-slate-800 mt-4">
+                    <div className="p-6 pt-0 flex items-center justify-between border-t border-stone-200 mt-4 bg-white/60 rounded-b-xl">
                       <Link
                         to={`/contratar?regime=${srv.regimeTarget}`}
-                        className="text-xs sm:text-sm font-bold text-amber-300 hover:text-amber-200 inline-flex items-center gap-1.5"
+                        className="text-xs sm:text-sm font-bold text-amber-800 hover:text-amber-900 inline-flex items-center gap-1.5"
                       >
                         <span>Solicitar contratação</span>
-                        <ArrowRight className="w-4 h-4 text-amber-400" />
+                        <ArrowRight className="w-4 h-4 text-amber-700" />
                       </Link>
                       <Link
                         to="/planos"
-                        className="text-xs text-slate-300 hover:text-white transition-colors"
+                        className="text-xs text-slate-600 hover:text-slate-950 font-medium transition-colors"
                       >
                         Comparar planos &rarr;
                       </Link>
@@ -518,17 +522,17 @@ export default function PublicHome() {
         </section>
 
         {/* 7. Liderança Técnica / Equipe */}
-        <section className="py-24 bg-slate-950 border-b border-slate-800">
+        <section className="py-24 bg-[#faf8f5] border-b border-stone-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             <div className="text-center space-y-4 max-w-3xl mx-auto">
-              <Badge className="bg-slate-900 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
-                <Users className="w-3.5 h-3.5 mr-1 text-amber-400 inline" />
+              <Badge className="bg-white text-amber-900 border-amber-600/30 text-xs font-semibold px-3 py-1">
+                <Users className="w-3.5 h-3.5 mr-1 text-amber-700 inline" />
                 Corpo Técnico
               </Badge>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-950 tracking-tight">
                 Profissionais experientes cuidando do seu CNPJ
               </h2>
-              <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
                 Conheça os profissionais responsáveis por auditar seus balanços e garantir
                 conformidade perante a Receita Federal.
               </p>
@@ -538,25 +542,25 @@ export default function PublicHome() {
               {teamLeadership.map((member, idx) => (
                 <Card
                   key={idx}
-                  className="border border-slate-800 bg-slate-900/90 hover:border-slate-700 transition-all rounded-xl overflow-hidden shadow-sm"
+                  className="border border-stone-200 bg-white hover:border-amber-400/60 hover:shadow-md transition-all rounded-xl overflow-hidden shadow-xs"
                 >
                   <CardContent className="p-7 space-y-5">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-slate-950 border border-slate-800 text-amber-300 font-bold text-base flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 font-bold text-base flex items-center justify-center shrink-0">
                         {member.initials}
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-white leading-tight">
+                        <h3 className="text-lg font-bold text-slate-950 leading-tight">
                           {member.name}
                         </h3>
-                        <p className="text-xs text-amber-300 font-semibold mt-0.5">{member.role}</p>
-                        <Badge className="bg-slate-950 text-slate-300 border-slate-800 text-[10px] mt-1 font-mono">
+                        <p className="text-xs text-amber-800 font-semibold mt-0.5">{member.role}</p>
+                        <Badge className="bg-stone-100 text-slate-700 border-stone-200 text-[10px] mt-1 font-mono">
                           {member.crc}
                         </Badge>
                       </div>
                     </div>
 
-                    <p className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-2 border-t border-slate-800">
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pt-2 border-t border-stone-200">
                       {member.bio}
                     </p>
                   </CardContent>
@@ -567,18 +571,18 @@ export default function PublicHome() {
         </section>
 
         {/* 8. Call to Action Principal (Conectar a Planos e Contratação) */}
-        <section className="py-24 bg-slate-950 relative overflow-hidden">
+        <section className="py-24 bg-gradient-to-b from-[#faf8f5] to-[#f4efe8] relative overflow-hidden">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-8">
-            <Badge className="bg-slate-900 text-amber-200 border-amber-500/30 text-xs font-semibold px-4 py-1.5">
-              <Sparkles className="w-4 h-4 mr-1.5 text-amber-400 inline" />
+            <Badge className="bg-white text-amber-900 border-amber-600/30 text-xs font-semibold px-4 py-1.5 shadow-xs">
+              <Sparkles className="w-4 h-4 mr-1.5 text-amber-700 inline" />
               Migração Gratuita &bull; Sem Multas Abusivas &bull; Contrato Sem Pegadinhas
             </Badge>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-950 tracking-tight leading-tight">
               Pronto para ter a segurança contábil que a sua empresa merece?
             </h2>
 
-            <p className="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-700 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
               Solicite uma proposta personalizada em menos de 2 minutos ou compare nossos planos. Se
               já for cliente, acesse o portal com suas credenciais.
             </p>
@@ -587,10 +591,10 @@ export default function PublicHome() {
               <Link to="/contratar" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-8 h-12 shadow-md shadow-amber-950/40 gap-2 text-base"
+                  className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 text-white font-bold px-8 h-12 shadow-sm gap-2 text-base"
                 >
                   <span>Solicitar Proposta Agora</span>
-                  <ArrowRight className="w-5 h-5 text-slate-950" />
+                  <ArrowRight className="w-5 h-5 text-white" />
                 </Button>
               </Link>
 
@@ -598,7 +602,7 @@ export default function PublicHome() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-slate-100 border-slate-700 px-7 h-12 text-sm sm:text-base font-semibold"
+                  className="w-full sm:w-auto bg-white hover:bg-stone-50 text-slate-900 border-stone-300 px-7 h-12 text-sm sm:text-base font-semibold shadow-xs"
                 >
                   <span>Ver Tabela de Planos</span>
                 </Button>
@@ -608,9 +612,9 @@ export default function PublicHome() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-amber-300 border-slate-700 px-6 h-12 text-sm sm:text-base font-semibold gap-2"
+                  className="w-full sm:w-auto bg-white hover:bg-stone-50 text-amber-900 border-amber-600/40 px-6 h-12 text-sm sm:text-base font-semibold gap-2 shadow-xs"
                 >
-                  <Lock className="w-4 h-4 text-amber-400" />
+                  <Lock className="w-4 h-4 text-amber-700" />
                   <span>Entrar no Portal</span>
                 </Button>
               </Link>

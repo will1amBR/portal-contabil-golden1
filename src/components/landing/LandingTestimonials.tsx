@@ -37,17 +37,17 @@ export function LandingTestimonials() {
   ]
 
   return (
-    <section className="py-24 bg-slate-900 border-b border-slate-800">
+    <section className="py-24 bg-white border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <Badge className="bg-slate-950 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
-            <Star className="w-3.5 h-3.5 mr-1 fill-amber-400 text-amber-400 inline" />
+          <Badge className="bg-[#faf8f5] text-amber-900 border-amber-600/30 text-xs font-semibold px-3 py-1">
+            <Star className="w-3.5 h-3.5 mr-1 fill-amber-500 text-amber-600 inline" />
             Depoimentos Verificados
           </Badge>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-950 tracking-tight">
             A opinião de quem confia seu CNPJ à Golden
           </h2>
-          <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
             Mais de 120 empresas confiam no nosso time contábil para garantir conformidade estrita e
             foco total no crescimento do negócio.
           </p>
@@ -58,37 +58,37 @@ export function LandingTestimonials() {
           {testimonials.map((t) => (
             <Card
               key={t.author}
-              className="border border-slate-800 bg-slate-950 hover:border-slate-700 transition-all rounded-xl flex flex-col justify-between shadow-sm"
+              className="border border-stone-200 bg-[#faf8f5] hover:border-amber-400/60 hover:shadow-md transition-all rounded-2xl flex flex-col justify-between shadow-xs"
             >
               <CardContent className="p-7 space-y-5">
                 {/* Stars and quote icon */}
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-amber-400">
+                  <div className="flex items-center gap-1 text-amber-500">
                     {[...Array(t.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400" />
+                      <Star key={i} className="w-4 h-4 fill-amber-500" />
                     ))}
                   </div>
-                  <Quote className="w-7 h-7 text-amber-500/20" />
+                  <Quote className="w-7 h-7 text-stone-300" />
                 </div>
 
-                <p className="text-sm sm:text-base text-slate-200 leading-relaxed italic">
+                <p className="text-sm sm:text-base text-slate-800 leading-relaxed italic">
                   "{t.content}"
                 </p>
 
                 {/* Author Info com foto sóbria */}
-                <div className="pt-4 border-t border-slate-800/80 flex items-center gap-3.5">
+                <div className="pt-4 border-t border-stone-200 flex items-center gap-3.5">
                   <img
                     src={`https://img.usecurling.com/ppl/medium?seed=${t.imageSeed}`}
                     alt={t.author}
-                    className="w-11 h-11 rounded-lg object-cover border border-amber-500/30"
+                    className="w-11 h-11 rounded-xl object-cover border border-amber-300 shadow-2xs"
                     loading="lazy"
                   />
                   <div>
-                    <h4 className="text-sm font-bold text-white leading-tight">{t.author}</h4>
-                    <p className="text-xs text-slate-300 mt-0.5">
-                      {t.role} &bull; <strong className="text-slate-100">{t.company}</strong>
+                    <h4 className="text-sm font-bold text-slate-950 leading-tight">{t.author}</h4>
+                    <p className="text-xs text-slate-600 mt-0.5">
+                      {t.role} &bull; <strong className="text-slate-900">{t.company}</strong>
                     </p>
-                    <p className="text-[11px] text-amber-300 font-medium mt-0.5">{t.segment}</p>
+                    <p className="text-[11px] text-amber-800 font-semibold mt-0.5">{t.segment}</p>
                   </div>
                 </div>
               </CardContent>
@@ -97,12 +97,12 @@ export function LandingTestimonials() {
         </div>
 
         {/* Satisfaction metric banner */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-center sm:text-left text-xs sm:text-sm text-slate-300">
-          <div className="flex items-center gap-2 text-white font-semibold">
-            <CheckCircle2 className="w-4 h-4 text-amber-400" />
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-center sm:text-left text-xs sm:text-sm text-slate-600">
+          <div className="flex items-center gap-2 text-slate-950 font-bold">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>NPS 89 &bull; Elevado Índice de Recomendação</span>
           </div>
-          <span className="hidden sm:inline text-slate-700">&bull;</span>
+          <span className="hidden sm:inline text-stone-300">&bull;</span>
           <span>Mais de 5.000 guias e demonstrativos fiscais apurados com rigor</span>
         </div>
       </div>

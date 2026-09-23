@@ -252,45 +252,45 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
   const renderCellValue = (val: boolean | string) => {
     if (typeof val === 'boolean') {
       return val ? (
-        <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-900 text-amber-400 border border-amber-500/30">
+        <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
           <Check className="w-4 h-4 stroke-[2.5]" />
         </span>
       ) : (
-        <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-900 text-slate-600">
+        <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-stone-100 text-stone-400">
           <X className="w-4 h-4" />
         </span>
       )
     }
-    return <span className="font-semibold text-slate-100 text-xs sm:text-sm">{val}</span>
+    return <span className="font-semibold text-slate-900 text-xs sm:text-sm">{val}</span>
   }
 
   return (
     <TooltipProvider>
-      <section id="planos" className="py-24 bg-slate-950 border-b border-slate-800">
+      <section id="planos" className="py-24 bg-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           {/* Header */}
           <div className="text-center space-y-4 max-w-3xl mx-auto">
-            <Badge className="bg-slate-900 text-amber-200 border-amber-500/30 text-xs font-semibold px-3 py-1">
-              <Zap className="w-3.5 h-3.5 mr-1 text-amber-400 inline" />
+            <Badge className="bg-[#faf8f5] text-amber-900 border-amber-600/30 text-xs font-semibold px-3 py-1">
+              <Zap className="w-3.5 h-3.5 mr-1 text-amber-700 inline" />
               Honorários Transparentes &bull; Sem Entrelinhas
             </Badge>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-950 tracking-tight">
               Planos desenhados para cada momento da sua empresa
             </h2>
-            <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
               Honorários justos, migração 100% gratuita e responsabilidade técnica integral. Compare
               lado a lado o escopo incluído em cada modalidade tributária.
             </p>
 
             {/* Billing cycle toggle sóbrio */}
-            <div className="inline-flex items-center p-1 rounded-lg bg-slate-900 border border-slate-800 mt-2">
+            <div className="inline-flex items-center p-1 rounded-xl bg-[#faf8f5] border border-stone-200 mt-2 shadow-xs">
               <button
                 type="button"
                 onClick={() => setBillingCycle('monthly')}
-                className={`px-5 py-2 rounded-md text-xs sm:text-sm font-bold transition-all ${
+                className={`px-5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all ${
                   billingCycle === 'monthly'
-                    ? 'bg-amber-600 text-slate-950 shadow-sm'
-                    : 'text-slate-300 hover:text-white'
+                    ? 'bg-amber-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-950'
                 }`}
               >
                 Mensal
@@ -298,14 +298,14 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
               <button
                 type="button"
                 onClick={() => setBillingCycle('annual')}
-                className={`px-5 py-2 rounded-md text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
+                className={`px-5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
                   billingCycle === 'annual'
-                    ? 'bg-amber-600 text-slate-950 shadow-sm'
-                    : 'text-slate-300 hover:text-white'
+                    ? 'bg-amber-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-950'
                 }`}
               >
                 <span>Anual</span>
-                <span className="bg-slate-950 text-amber-300 text-[10px] font-bold px-1.5 py-0.5 rounded border border-amber-500/30">
+                <span className="bg-amber-100 text-amber-900 text-[10px] font-bold px-1.5 py-0.5 rounded border border-amber-300">
                   -15%
                 </span>
               </button>
@@ -321,15 +321,15 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
               return (
                 <div
                   key={p.id}
-                  className={`rounded-xl p-7 flex flex-col justify-between transition-all relative ${
+                  className={`rounded-2xl p-7 flex flex-col justify-between transition-all relative ${
                     p.popular
-                      ? 'bg-slate-900 border-2 border-amber-500/70 shadow-xl shadow-amber-950/20'
-                      : 'bg-slate-900/90 border border-slate-800 hover:border-slate-700'
+                      ? 'bg-white border-2 border-amber-600/80 shadow-lg shadow-amber-900/5'
+                      : 'bg-[#faf8f5] border border-stone-200 hover:border-amber-400/60 hover:shadow-md'
                   }`}
                 >
                   {p.popular && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-600 text-slate-950 font-bold text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-md shadow-md flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 fill-slate-950" />
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-600 text-white font-bold text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-xs flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 fill-white" />
                       Recomendado para PMEs
                     </div>
                   )}
@@ -338,33 +338,35 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
                     {/* Header */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <div className="w-10 h-10 rounded-lg bg-slate-950 text-amber-400 border border-slate-800 flex items-center justify-center">
-                          <IconComp className="w-5 h-5" />
+                        <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 flex items-center justify-center">
+                          <IconComp className="w-5 h-5 text-amber-700" />
                         </div>
-                        <Badge className="bg-slate-950 text-slate-200 border-slate-800 text-[11px] font-mono">
+                        <Badge className="bg-stone-100 text-slate-800 border-stone-200 text-[11px] font-mono">
                           {p.id.toUpperCase()}
                         </Badge>
                       </div>
 
-                      <h3 className="text-2xl font-bold text-white">{p.name}</h3>
-                      <p className="text-xs sm:text-sm text-slate-300 min-h-[36px]">{p.tag}</p>
+                      <h3 className="text-2xl font-bold text-slate-950">{p.name}</h3>
+                      <p className="text-xs sm:text-sm text-slate-600 min-h-[36px]">{p.tag}</p>
                     </div>
 
                     {/* Price display com números sólidos */}
-                    <div className="pt-3 pb-2 border-y border-slate-800">
+                    <div className="pt-3 pb-2 border-y border-stone-200">
                       {price !== null ? (
                         <div>
-                          <div className="text-[11px] text-amber-300 font-semibold uppercase tracking-wider">
+                          <div className="text-[11px] text-amber-800 font-bold uppercase tracking-wider">
                             Honorários a partir de
                           </div>
                           <div className="flex items-baseline gap-1 mt-0.5">
-                            <span className="text-4xl sm:text-5xl font-bold text-white font-mono tracking-tight">
+                            <span className="text-4xl sm:text-5xl font-bold text-slate-950 font-mono tracking-tight">
                               R$ {price}
                             </span>
-                            <span className="text-xs sm:text-sm text-slate-300">{p.period}</span>
+                            <span className="text-xs sm:text-sm text-slate-600 font-medium">
+                              {p.period}
+                            </span>
                           </div>
                           {billingCycle === 'annual' && (
-                            <p className="text-xs text-amber-300 mt-1 font-medium">
+                            <p className="text-xs text-amber-800 mt-1 font-semibold">
                               Faturamento anual com desconto de R${' '}
                               {(p.priceMonthly! - p.priceAnnual!) * 12}/ano
                             </p>
@@ -372,37 +374,37 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
                         </div>
                       ) : (
                         <div>
-                          <div className="text-[11px] text-amber-300 font-semibold uppercase tracking-wider">
+                          <div className="text-[11px] text-amber-800 font-bold uppercase tracking-wider">
                             Estrutura Corporativa
                           </div>
                           <div className="flex items-baseline gap-1 mt-0.5">
-                            <span className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                            <span className="text-3xl sm:text-4xl font-bold text-slate-950 tracking-tight">
                               Sob Consulta
                             </span>
                           </div>
-                          <p className="text-xs text-slate-300 mt-1">
+                          <p className="text-xs text-slate-600 mt-1">
                             Diagnóstico fiscal e societário prévio sem custo
                           </p>
                         </div>
                       )}
 
-                      <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                      <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">
                         {p.disclaimer}
                       </p>
                     </div>
 
                     {/* Feature highlights list com alto contraste */}
                     <div className="space-y-3">
-                      <p className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                      <p className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                         Escopo técnico principal:
                       </p>
                       <ul className="space-y-2.5">
                         {p.topHighlights.map((feat) => (
                           <li
                             key={feat}
-                            className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-200"
+                            className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700"
                           >
-                            <Check className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                             <span>{feat}</span>
                           </li>
                         ))}
@@ -416,17 +418,17 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
                       <Button
                         type="button"
                         onClick={() => onSelectPlan(p.leadRegime)}
-                        className={`w-full font-bold h-12 text-sm shadow-md gap-2 ${
+                        className={`w-full font-bold h-12 text-sm shadow-xs gap-2 ${
                           p.popular
-                            ? 'bg-amber-600 hover:bg-amber-500 text-slate-950 shadow-amber-950/30'
-                            : 'bg-slate-800 hover:bg-slate-750 text-white border border-slate-700'
+                            ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                            : 'bg-slate-900 hover:bg-slate-800 text-white'
                         }`}
                       >
                         <span>Contratar {p.name}</span>
                         <ArrowRight className="w-4 h-4" />
                       </Button>
                     </a>
-                    <p className="text-xs text-slate-400 text-center mt-2.5">
+                    <p className="text-xs text-slate-500 text-center mt-2.5">
                       Sem taxa de matrícula &bull; Migração assistida sem custo
                     </p>
                   </div>
@@ -438,34 +440,34 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
           {/* Full Comparison Table Section */}
           <div className="space-y-6 pt-10">
             <div className="text-center space-y-2">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white">
+              <h3 className="text-2xl sm:text-3xl font-bold text-slate-950">
                 Tabela Comparativa Completa
               </h3>
-              <p className="text-sm text-slate-300">
+              <p className="text-sm text-slate-600">
                 Detalhamento dos serviços e obrigações por regime tributário
               </p>
             </div>
 
             {/* Desktop / Tablet comparative table */}
-            <div className="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden shadow-xl">
+            <div className="rounded-2xl border border-stone-200 bg-white overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse min-w-[720px]">
                   <thead>
-                    <tr className="bg-slate-900 border-b border-slate-800">
-                      <th className="p-4 sm:p-5 text-sm font-bold text-white w-2/5">
+                    <tr className="bg-[#faf8f5] border-b border-stone-200">
+                      <th className="p-4 sm:p-5 text-sm font-bold text-slate-950 w-2/5">
                         Funcionalidades & Entregas Fiscais
                       </th>
-                      <th className="p-4 sm:p-5 text-center text-sm font-bold text-white w-1/5">
-                        <span className="block text-amber-300">Simples Nacional</span>
-                        <span className="text-xs font-normal text-slate-300">desde R$ 149/mês</span>
+                      <th className="p-4 sm:p-5 text-center text-sm font-bold text-slate-950 w-1/5">
+                        <span className="block text-amber-800">Simples Nacional</span>
+                        <span className="text-xs font-normal text-slate-600">desde R$ 149/mês</span>
                       </th>
-                      <th className="p-4 sm:p-5 text-center text-sm font-bold text-white w-1/5">
-                        <span className="block text-amber-300">Lucro Presumido</span>
-                        <span className="text-xs font-normal text-slate-300">desde R$ 249/mês</span>
+                      <th className="p-4 sm:p-5 text-center text-sm font-bold text-slate-950 w-1/5">
+                        <span className="block text-amber-800">Lucro Presumido</span>
+                        <span className="text-xs font-normal text-slate-600">desde R$ 249/mês</span>
                       </th>
-                      <th className="p-4 sm:p-5 text-center text-sm font-bold text-white w-1/5">
-                        <span className="block text-amber-300">Lucro Real</span>
-                        <span className="text-xs font-normal text-slate-300">Sob Medida</span>
+                      <th className="p-4 sm:p-5 text-center text-sm font-bold text-slate-950 w-1/5">
+                        <span className="block text-amber-800">Lucro Real</span>
+                        <span className="text-xs font-normal text-slate-600">Sob Medida</span>
                       </th>
                     </tr>
                   </thead>
@@ -473,13 +475,10 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
                   <tbody>
                     {comparisonCategories.map((cat, idx) => (
                       <>
-                        <tr
-                          key={`cat-${idx}`}
-                          className="bg-slate-900/70 border-y border-slate-800"
-                        >
+                        <tr key={`cat-${idx}`} className="bg-stone-50 border-y border-stone-200">
                           <td
                             colSpan={4}
-                            className="p-3 px-5 text-xs font-bold uppercase tracking-wider text-amber-300"
+                            className="p-3 px-5 text-xs font-bold uppercase tracking-wider text-amber-900"
                           >
                             {cat.category}
                           </td>
@@ -487,19 +486,19 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
                         {cat.rows.map((row, rIdx) => (
                           <tr
                             key={`row-${rIdx}`}
-                            className="border-b border-slate-800/60 hover:bg-slate-900/30 transition-colors"
+                            className="border-b border-stone-200/70 hover:bg-[#faf8f5] transition-colors"
                           >
-                            <td className="p-4 px-5 text-xs sm:text-sm text-slate-200">
+                            <td className="p-4 px-5 text-xs sm:text-sm text-slate-700">
                               <div className="flex items-center gap-2">
-                                <span>{row.feature}</span>
+                                <span className="font-medium text-slate-900">{row.feature}</span>
                                 {row.tooltip && (
                                   <Tooltip>
                                     <TooltipTrigger asChild>
-                                      <span className="cursor-help text-slate-400 hover:text-slate-200">
+                                      <span className="cursor-help text-slate-400 hover:text-slate-600">
                                         <HelpCircle className="w-3.5 h-3.5" />
                                       </span>
                                     </TooltipTrigger>
-                                    <TooltipContent className="bg-slate-900 text-slate-100 border-slate-700 text-xs max-w-xs">
+                                    <TooltipContent className="bg-slate-900 text-white border-slate-800 text-xs max-w-xs">
                                       {row.tooltip}
                                     </TooltipContent>
                                   </Tooltip>
@@ -518,9 +517,9 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
               </div>
 
               {/* Table footer with quick CTA */}
-              <div className="p-4 sm:p-6 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300">
-                  <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0" />
+              <div className="p-4 sm:p-6 bg-[#faf8f5] border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-700">
+                  <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0" />
                   <span>
                     Dúvidas sobre o regime ideal para pagar menos impostos dentro da lei? Nossa
                     equipe analisa seu faturamento gratuitamente.
@@ -529,7 +528,7 @@ export function LandingPlansComparison({ onSelectPlan }: LandingPlansComparisonP
                 <a href="#contratar">
                   <Button
                     onClick={() => onSelectPlan('nao_sei')}
-                    className="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs sm:text-sm h-11 px-5"
+                    className="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs sm:text-sm h-11 px-5 shadow-xs"
                   >
                     Diagnóstico Tributário Gratuito
                   </Button>
