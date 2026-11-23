@@ -38,7 +38,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { RequiredDocsModal } from '@/components/RequiredDocsModal'
 import { NotificationBell } from '@/components/NotificationBell'
 import { ClientOnboardingModal } from '@/components/ClientOnboardingModal'
 import {
@@ -445,7 +444,6 @@ export default function Layout() {
 
         {/* Page Content Container */}
         <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto animate-fade-in-up pb-24 lg:pb-8">
-          {!isAccountant && <RequiredDocsModal />}
           {!isAccountant && (
             <ClientOnboardingModal
               open={onboardingOpen}

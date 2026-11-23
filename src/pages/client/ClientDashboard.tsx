@@ -30,6 +30,7 @@ import {
 } from 'lucide-react'
 import { format, parseISO } from 'date-fns'
 import TaxObligationsCalendar from '@/components/TaxObligationsCalendar'
+import { RequiredDocsBanner } from '@/components/RequiredDocsBanner'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/use-auth'
 
@@ -168,6 +169,9 @@ export default function ClientDashboard() {
           </div>{' '}
         </div>
       </div>
+
+      {/* Aviso de documentos obrigatórios pendentes (não-modal, dispensável) */}
+      <RequiredDocsBanner />
 
       {/* KPI Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
